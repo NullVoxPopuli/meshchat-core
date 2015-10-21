@@ -1,3 +1,16 @@
+## Spiced Gracken Specific
+settings.json
+serverlist.json
+test-settings
+test-activeserverlist
+test-serverlist
+test-hashfile
+debug.log
+*.sqlite3
+*.json
+
+
+
 *.gem
 *.rbc
 /.config
