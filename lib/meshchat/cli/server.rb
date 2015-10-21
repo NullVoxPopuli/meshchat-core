@@ -6,9 +6,9 @@ module MeshChat
       def handle
         case sub_command
         when ONLINE
-          Display.info Node.online.map(&:as_info) || 'no one is online'
+          Display.info Node.online.map(&:as_info).join(', ') || 'no one is online'
         else
-          Display.info Node.all.map(&:as_info) || 'there are no nodes'
+          Display.info Node.all.map(&:as_info).join(', ') || 'there are no nodes'
         end
       end
     end

@@ -55,11 +55,11 @@ module MeshChat
       end
 
       def client
-        MeshChat::NAME
+        MeshChat.name
       end
 
       def client_version
-        MeshChat::VERSION
+        MeshChat.version
       end
 
       # shows the message

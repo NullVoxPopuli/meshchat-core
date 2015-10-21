@@ -9,7 +9,7 @@ module MeshChat
           disable :logging
           # enable :logging
           set :bind, '0.0.0.0' #['10.10.2.29','127.0.0.1', 'localhost']
-          # set :show_exceptions, :after_handler
+          set :show_exceptions, :after_handler
           set :threaded, true
         end
         # TODO: do we want to return an error if

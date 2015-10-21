@@ -25,6 +25,8 @@ require 'active_support/core_ext/object/try'
 
 # local files for meshchat
 require 'meshchat/version'
+require 'meshchat/database'
+require 'meshchat/instance'
 require 'meshchat/encryption'
 require 'meshchat/display'
 require 'meshchat/display/manager'
@@ -61,55 +63,11 @@ module MeshChat
     options = defaults.merge(overrides)
 
     # before doing anything, ensure we have a place to store data
-    setup_storage
-
+    Database.setup_storage
     # set the options / overrides!
-    new_ui(options[:display], options[:on_display_start])
-    set_client_info(options[:client_name], options[:client_version])
+    Instance.start(options)
   end
 
-  # @param [class] klass should be something that implements Display::Base
-  # @param [Proc] proc what to do when starting the UI
-  def new_ui(klass, on_display_start)
-    @@display = Display::Manager.new(klass)
-    @@display.start do
-      on_display_start.call if on_display_start
-    end
-  end
-
-  def set_client_info(name, version)
-    @@name = name
-    @@version = version
-  end
-
-  def name; @@name; end
-  def version; @@version; end
-  def ui; @@display; end
-
-
-  # Upon initial startup, instantiated the database
-  # this is used for storing the information of every node
-  # on the network
-  def setup_storage
-    ActiveRecord::Base.establish_connection(
-        adapter: "sqlite3",
-        database: "meshchat.sqlite3",
-        pool: 128
-    )
-
-    ActiveRecord::Migration.suppress_messages do
-      ActiveRecord::Schema.define do
-        unless table_exists? :entries
-          create_table :entries do |table|
-            table.column :alias_name, :string
-            table.column :location, :string
-            table.column :uid, :string
-            table.column :public_key, :string
-            table.column :online, :boolean, default: true, null: false
-          end
-        end
-      end
-    end
-  end
-
+  def name; Instance.client_name; end
+  def version; Instance.client_version; end
 end

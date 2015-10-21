@@ -16,7 +16,7 @@ def mock_settings_objects
   display_manager = MeshChat::Display::Manager.new(
     MeshChatStub::Display::Null::UI
   )
-  allow(MeshChat).to receive(:ui){ display_manager }
+  allow(MeshChat::Instance).to receive(:display){ display_manager }
 
   allow(MeshChat).to receive(:name){ MeshChat::NAME }
   allow(MeshChat).to receive(:versior){ MeshChat::VERSION }

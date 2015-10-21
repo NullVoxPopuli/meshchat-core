@@ -157,7 +157,7 @@ module MeshChat
       # close_server
       Display.info 'saving config...'
       Settings.save
-      Display.alert "\n\nGoodbye.  \n\nThank you for using #{MeshChat::NAME}"
+      Display.alert "\n\nGoodbye.  \n\nThank you for using #{MeshChat.name}"
       exit
     end
   end
