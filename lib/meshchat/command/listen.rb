@@ -1,8 +1,8 @@
 module MeshChat
   class CLI
-    class Share < CLI::Command
+    class Listen < Command::Base
       def handle
-        Settings.share
+        CLI.start_server
       end
     end
   end

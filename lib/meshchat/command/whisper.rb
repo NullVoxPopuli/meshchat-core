@@ -1,6 +1,6 @@
 module MeshChat
   class CLI
-    class Whisper < CLI::Command
+    class Whisper < Command::Base
       def target
         # get first arg
         command

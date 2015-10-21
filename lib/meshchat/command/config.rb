@@ -1,6 +1,6 @@
 module MeshChat
   class CLI
-    class Config < CLI::Command
+    class Config < Command::Base
       def handle
         case sub_command
         when SET

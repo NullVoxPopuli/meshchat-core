@@ -1,6 +1,6 @@
 module MeshChat
   class CLI
-    class Ping < CLI::Command
+    class Ping < Command::Base
       def handle
         if command_valid?
           msg = Message::Ping.new

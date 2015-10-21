@@ -1,6 +1,6 @@
 module MeshChat
   class CLI
-    class Import < CLI::Command
+    class Import < Command::Base
       def handle
         if command_valid?
           node = Models::Entry.import_from_file(filename)

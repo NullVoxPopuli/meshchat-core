@@ -1,6 +1,6 @@
 module MeshChat
   class CLI
-    class Server < CLI::Command
+    class Server < Command::Base
       ONLINE = 'online'
 
       def handle

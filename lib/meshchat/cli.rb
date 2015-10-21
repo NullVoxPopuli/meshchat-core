@@ -1,19 +1,19 @@
 require 'meshchat/cli/input'
-require 'meshchat/cli/command'
-require 'meshchat/cli/identity'
-require 'meshchat/cli/irb'
-require 'meshchat/cli/config'
-require 'meshchat/cli/ping'
-require 'meshchat/cli/ping_all'
-require 'meshchat/cli/server'
-require 'meshchat/cli/whisper'
-require 'meshchat/cli/exit'
-require 'meshchat/cli/listen'
-require 'meshchat/cli/stop_listening'
-require 'meshchat/cli/who'
-require 'meshchat/cli/init'
-require 'meshchat/cli/share'
-require 'meshchat/cli/import'
+require 'meshchat/command/command'
+require 'meshchat/command/identity'
+require 'meshchat/command/irb'
+require 'meshchat/command/config'
+require 'meshchat/command/ping'
+require 'meshchat/command/ping_all'
+require 'meshchat/command/server'
+require 'meshchat/command/whisper'
+require 'meshchat/command/exit'
+require 'meshchat/command/listen'
+require 'meshchat/command/stop_listening'
+require 'meshchat/command/who'
+require 'meshchat/command/init'
+require 'meshchat/command/share'
+require 'meshchat/command/import'
 
 module MeshChat
   # A user interface is responsible for for creating a client
@@ -49,22 +49,10 @@ module MeshChat
       def instance
         @instance ||= new
       end
-
-      # TODO: extract this for sub commands
-      def autocompletes
-        commands = COMMAND_MAP.map{ |k, v| "/#{k}" }
-        aliases = MeshChat::Node.all.map{ |n| "#{n.alias_name}" }
-        commands + aliases
-      end
-
     end
 
 
     def initialize
-      # Set up auto complete
-      completion = proc{ |s| self.class.autocompletes.grep(/^#{Regexp.escape(s)}/) }
-      Readline.completion_proc = completion
-
       # this will allow our listener / server to print exceptions,
       # rather than  silently fail
       Thread.abort_on_exception = true
