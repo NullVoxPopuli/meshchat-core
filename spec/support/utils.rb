@@ -13,13 +13,21 @@ def mock_settings_objects
   s = MeshChat::Config::Settings.new
   allow(MeshChat::Config::Settings).to receive(:instance) { s }
 
+
   display_manager = MeshChat::Display::Manager.new(
     MeshChatStub::Display::Null::UI
   )
-  allow(MeshChat::Instance).to receive(:display){ display_manager }
 
-  allow(MeshChat).to receive(:name){ MeshChat::NAME }
-  allow(MeshChat).to receive(:versior){ MeshChat::VERSION }
+  instance = MeshChat::Instance.new(
+    client_name: MeshChat::NAME, # name of your client
+    client_version: MeshChat::VERSION, # version of your client
+    #display: MeshChatStub::Display::Null::UI, # your class of your implementation of `Display::Base`
+    #on_display_start: ->{ MeshChat::CLI.check_startup_settings } # optional
+  )
+  MeshChat::Instance.instance_variable_set('@instance', instance)
+
+  allow(instance).to receive(:start_ui){  }
+  allow(instance).to receive(:display){ display_manager }
 end
 
 def delete_test_files
