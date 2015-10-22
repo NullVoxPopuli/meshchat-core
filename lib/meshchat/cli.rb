@@ -123,7 +123,6 @@ module MeshChat
           threaded: true
         )
       end
-
     end
 
     def close_server

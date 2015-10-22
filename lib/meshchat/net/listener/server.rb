@@ -15,6 +15,14 @@ module MeshChat
         # TODO: do we want to return an error if
         # we can't decrypt?
 
+        def self.run!(*)
+          # start the server
+          super
+
+          # send a pingall to see who's online
+          MeshChat::Command::PingAll.new.handle
+        end
+
         get '/' do
           process_request
         end
