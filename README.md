@@ -6,14 +6,14 @@ This is the core functionality for implementing a [mesh-chat](https://github.com
 
 See [Spiced Gracken](https://github.com/NullVoxPopuli/spiced_gracken)
 
-For now, all that needs to be implemented is the Display.
-Take a look at `Display::Base` to see what you need to override.
+In order to use meshchat with your own interface, you only need to pass in your own implementations of `Display::Base` and `CLI::Base`
 
 ```ruby
 MeshChat.start(
   client_name: NAME, # name of your client
   client_version: VERSION, # version of your client
   display: ui, # your class of your implementation of `Display::Base`
+  input: input, # your class of your implementation of `CLI::Base`
   on_display_start: ->{ MeshChat::CLI.check_startup_settings } # optional
 )
 ```
