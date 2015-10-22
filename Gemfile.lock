@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    meshchat (0.5.0)
+    meshchat (0.6.1)
       activerecord
       activesupport
       awesome_print

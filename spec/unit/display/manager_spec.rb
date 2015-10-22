@@ -24,6 +24,7 @@ describe MeshChat::Display::Manager do
     end
 
     it 'invokes info' do
+      pending 'output disabled for pingreply'
       expect(MeshChat::Instance.display).to receive(:info)
       m = MeshChat::Message::PingReply.new
       MeshChat::Display.present_message(m)
