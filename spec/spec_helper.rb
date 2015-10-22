@@ -10,6 +10,7 @@ CodeClimate::TestReporter.start
 
 # This Gem
 require 'meshchat'
+MeshChat.const_set(:Notify, MeshChat::Notifier::Base)
 
 SimpleCov.start do
   # add_filter "/lib/meshchat/display/bash/"

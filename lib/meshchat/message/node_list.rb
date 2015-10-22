@@ -18,7 +18,10 @@ module MeshChat
 
         if they_only_have.present?
           they_only_have.each do |n|
-            Node.from_json(n).save!
+            # be sure that we don't add ourselves
+            unless n['uid'] == Settings['uid']
+              Node.from_json(n).save!
+            end
           end
         end
 

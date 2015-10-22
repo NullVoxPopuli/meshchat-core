@@ -32,8 +32,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activerecord'
   s.add_runtime_dependency 'activesupport'
   s.add_runtime_dependency 'colorize'
-  s.add_runtime_dependency 'curses'
-  s.add_runtime_dependency 'libnotify'
   s.add_runtime_dependency 'awesome_print'
 
 

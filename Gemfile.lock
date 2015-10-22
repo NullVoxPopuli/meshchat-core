@@ -1,14 +1,12 @@
 PATH
   remote: .
   specs:
-    meshchat (0.6.1)
+    meshchat (0.6.2)
       activerecord
       activesupport
       awesome_print
       colorize
       curb
-      curses
-      libnotify
       sinatra
       sqlite3
       thin
@@ -43,16 +41,12 @@ GEM
     colorize (0.7.7)
     columnize (0.9.0)
     curb (0.8.8)
-    curses (1.0.1)
     daemons (1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
     eventmachine (1.0.8)
-    ffi (1.9.10)
     i18n (0.7.0)
     json (1.8.3)
-    libnotify (0.9.1)
-      ffi (>= 1.0.11)
     method_source (0.8.2)
     minitest (5.8.1)
     parser (2.2.3.0)

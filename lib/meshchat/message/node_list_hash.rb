@@ -22,6 +22,8 @@ module MeshChat
             node: node,
             message: NodeList.new(message: Node.as_json)
           )
+        else
+          Display.debug 'node list hash matches'
         end
       end
     end

@@ -4,10 +4,8 @@ require 'socket'
 require 'json'
 require 'date'
 require 'colorize'
-require 'curses'
 require 'io/console'
 require "readline"
-
 require 'logger'
 
 # required gems
@@ -16,7 +14,6 @@ require 'sqlite3'
 require 'active_record'
 require 'curb'
 require 'thin'
-require 'libnotify'
 
 # active support extensions
 require 'active_support/core_ext/module/delegation'
@@ -47,7 +44,6 @@ module MeshChat
   Settings = Config::Settings
   Node = Models::Entry
   Cipher = Encryption
-  Notify = Notifier::Base
 
   module_function
 
@@ -59,12 +55,17 @@ module MeshChat
       display: Display::Base,
       client_name: NAME,
       client_version: VERSION,
-      input: CLI::Base
+      input: CLI::Base,
+      notifier: Notifier::Base
     }
     options = defaults.merge(overrides)
 
     # before doing anything, ensure we have a place to store data
     Database.setup_storage
+
+    # set up the notifier (if there is one)
+    const_set(:Notify, options[:notifier])
+
     # set the options / overrides!
     Instance.start(options)
   end

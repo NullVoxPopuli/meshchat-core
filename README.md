@@ -8,12 +8,15 @@ See [Spiced Gracken](https://github.com/NullVoxPopuli/spiced_gracken)
 
 In order to use meshchat with your own interface, you only need to pass in your own implementations of `Display::Base` and `CLI::Base`
 
+Optionally, you may pass in a notifier to have the mesh-chat trigger notifications for your system
+
 ```ruby
 MeshChat.start(
   client_name: NAME, # name of your client
   client_version: VERSION, # version of your client
-  display: ui, # your class of your implementation of `Display::Base`
-  input: input, # your class of your implementation of `CLI::Base`
+  display: ui, # your class implementing `Display::Base`
+  input: input, # your class implementing `CLI::Base`
+  notifier: notifier, # your class implementing `Notifier::Base`
   on_display_start: ->{ MeshChat::CLI.check_startup_settings } # optional
 )
 ```
