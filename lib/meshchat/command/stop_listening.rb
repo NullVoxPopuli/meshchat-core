@@ -1,6 +1,6 @@
 module MeshChat
-  class CLI
-    class StopListening < CLI::Command
+  class Command
+    class StopListening < Command::Base
       def handle
         CLI.close_server
       end

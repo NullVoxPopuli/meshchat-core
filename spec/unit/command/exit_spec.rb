@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::Exit do
-  let (:klass){ MeshChat::CLI::Exit }
+describe MeshChat::Command::Exit do
+  let (:klass){ MeshChat::Command::Exit }
 
   before(:each) do
     mock_settings_objects

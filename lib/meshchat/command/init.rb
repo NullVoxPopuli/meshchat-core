@@ -1,6 +1,6 @@
 module MeshChat
-  class CLI
-    class Init < CLI::Command
+  class Command
+    class Init < Command::Base
       def handle
         if Settings.uid_exists?
           if confirm? 'uid exists, are you sure you want a new identity?'

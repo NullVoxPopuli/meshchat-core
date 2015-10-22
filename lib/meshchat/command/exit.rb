@@ -1,6 +1,6 @@
 module MeshChat
-  class CLI
-    class Exit < CLI::Command
+  class Command
+    class Exit < Command::Base
       def handle
         CLI.shutdown
       end

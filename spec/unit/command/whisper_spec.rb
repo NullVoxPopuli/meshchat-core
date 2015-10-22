@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::Whisper do
-  let (:klass){ MeshChat::CLI::Whisper }
+describe MeshChat::Command::Whisper do
+  let (:klass){ MeshChat::Command::Whisper }
 
   before(:each) do
     mock_settings_objects

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::Who do
-  let (:klass){ MeshChat::CLI::Who }
+describe MeshChat::Command::Who do
+  let (:klass){ MeshChat::Command::Who }
 
   before(:each) do
     mock_settings_objects

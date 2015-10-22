@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::Ping do
-  let (:klass){ MeshChat::CLI::Ping }
+describe MeshChat::Command::Ping do
+  let (:klass){ MeshChat::Command::Ping }
 
   before(:each) do
     mock_settings_objects

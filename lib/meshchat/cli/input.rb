@@ -9,9 +9,9 @@ module MeshChat
         def create(input)
           klass =
             if is_command(input)
-              CLI::Command
+              Command::Base
             elsif is_whisper?(input)
-              CLI::Whisper
+              Command::Whisper
             else
               # TODO: maybe change this to a chat command?
               CLI::Input

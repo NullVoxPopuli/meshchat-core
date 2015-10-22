@@ -1,6 +1,6 @@
 module MeshChat
-  class CLI
-    class Command < CLI::Input
+  class Command
+    class Base < CLI::Input
       attr_accessor :_input
 
       # Commands

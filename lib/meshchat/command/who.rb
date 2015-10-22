@@ -1,6 +1,6 @@
 module MeshChat
-  class CLI
-    class Who < CLI::Command
+  class Command
+    class Who < Command::Base
       def handle
         Display.info Node.online.map(&:as_info) || 'no one is online'
       end
