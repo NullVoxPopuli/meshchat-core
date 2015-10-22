@@ -7,11 +7,13 @@ module MeshChat
 
         def process(raw)
           request = Request.new(raw)
-
           message = request.message
-          update_sender_info(request.json)
 
+          # handle the message
           Display.present_message message
+
+          # then update the sender info in the db
+          update_sender_info(request.json)
         end
 
         def update_sender_info(json)

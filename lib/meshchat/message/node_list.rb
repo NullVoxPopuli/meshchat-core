@@ -16,6 +16,12 @@ module MeshChat
         received_list = message
         we_only_have, they_only_have = Node.diff(received_list)
 
+        if they_only_have.present?
+          they_only_have.each do |n|
+            Node.from_json(n).save!
+          end
+        end
+
         if we_only_have.present?
           location = payload['sender']['location']
 
