@@ -4,7 +4,7 @@ This is the core functionality for implementing a [mesh-chat](https://github.com
 
 #Usage
 
-See [Spiced Gracken](https://github.com/NullVoxPopuli/spiced_gracken)
+See [Spiced Rumby](https://github.com/NullVoxPopuli/spiced_rumby)
 
 In order to use meshchat with your own interface, you only need to pass in your own implementations of `Display::Base` and `CLI::Base`
 
