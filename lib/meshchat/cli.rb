@@ -1,5 +1,6 @@
 require 'meshchat/cli/input'
-require 'meshchat/command/command'
+require 'meshchat/cli/base'
+require 'meshchat/command/base'
 require 'meshchat/command/identity'
 require 'meshchat/command/irb'
 require 'meshchat/command/config'
@@ -15,29 +16,32 @@ require 'meshchat/command/init'
 require 'meshchat/command/share'
 require 'meshchat/command/import'
 
+
 module MeshChat
   # A user interface is responsible for for creating a client
   # and sending messages to that client
   class CLI
     COMMAND_MAP = {
-      Command::CONFIG => CLI::Config,
-      Command::PING => CLI::Ping,
-      Command::PING_ALL => CLI::PingAll,
-      Command::STOP_LISTENING => CLI::StopListening,
-      Command::SERVERS => CLI::Server,
-      Command::SERVER => CLI::Server,
-      Command::EXIT => CLI::Exit,
-      Command::QUIT => CLI::Exit,
-      Command::LISTEN => CLI::Listen,
-      Command::WHO => CLI::Who,
-      Command::IDENTITY => CLI::Identity,
-      Command::IRB => CLI::IRB,
-      Command::INIT => CLI::Init,
-      Command::SHARE => CLI::Share,
-      Command::IMPORT => CLI::Import,
-      Command::EXPORT => CLI::Share
+      MeshChat::Command::Base::CONFIG => MeshChat::Command::Config,
+      MeshChat::Command::Base::PING => MeshChat::Command::Ping,
+      MeshChat::Command::Base::PING_ALL => MeshChat::Command::PingAll,
+      MeshChat::Command::Base::STOP_LISTENING => MeshChat::Command::StopListening,
+      MeshChat::Command::Base::SERVERS => MeshChat::Command::Server,
+      MeshChat::Command::Base::SERVER => MeshChat::Command::Server,
+      MeshChat::Command::Base::EXIT => MeshChat::Command::Exit,
+      MeshChat::Command::Base::QUIT => MeshChat::Command::Exit,
+      MeshChat::Command::Base::LISTEN => MeshChat::Command::Listen,
+      MeshChat::Command::Base::WHO => MeshChat::Command::Who,
+      MeshChat::Command::Base::IDENTITY => MeshChat::Command::Identity,
+      MeshChat::Command::Base::IRB => MeshChat::Command::IRB,
+      MeshChat::Command::Base::INIT => MeshChat::Command::Init,
+      MeshChat::Command::Base::SHARE => MeshChat::Command::Share,
+      MeshChat::Command::Base::IMPORT => MeshChat::Command::Import,
+      MeshChat::Command::Base::EXPORT => MeshChat::Command::Share
     }
 
+
+    attr_accessor :_input_device
 
     class << self
 
@@ -46,13 +50,21 @@ module MeshChat
         :check_startup_settings, :create_input, :close_server,
         to: :instance
 
+      def create(input_klass)
+        @instance = new(input_klass)
+      end
+
       def instance
+        # default input collector
         @instance ||= new
       end
     end
 
 
-    def initialize
+    def initialize(input_klass = nil)
+      input_klass ||= MeshChat::CLI::Base
+      # instantiate the interface with which we are communicated with
+      self._input_device = input_klass.new
       # this will allow our listener / server to print exceptions,
       # rather than  silently fail
       Thread.abort_on_exception = true
@@ -63,7 +75,7 @@ module MeshChat
     end
 
     def process_input
-      msg = get_input
+      msg = _input_device.get_input
       create_input(msg)
     rescue SystemExit, Interrupt
       close_program
@@ -80,11 +92,6 @@ module MeshChat
       Display.error e.message
       Display.error e.class.name
       Display.error e.backtrace.join("\n").colorize(:red)
-    end
-
-
-    def get_input
-      Readline.readline('> ', true)
     end
 
     def start_server

@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Listen < Command::Base
       def handle
         CLI.start_server

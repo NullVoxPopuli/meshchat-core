@@ -10,12 +10,12 @@ describe MeshChat::CLI::Input do
   describe '#create' do
     it 'creates a command' do
       result = klass.create('/anything')
-      expect(result).to be_kind_of(MeshChat::CLI::Command)
+      expect(result).to be_kind_of(MeshChat::Command::Base)
     end
 
     it 'creates a whisper' do
       result = klass.create('@anybody')
-      expect(result).to be_kind_of(MeshChat::CLI::Whisper)
+      expect(result).to be_kind_of(MeshChat::Command::Whisper)
     end
 
     it 'creates a generic input' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::StopListening do
-  let (:klass){ MeshChat::CLI::StopListening }
+describe MeshChat::Command::StopListening do
+  let (:klass){ MeshChat::Command::StopListening }
 
   before(:each) do
     mock_settings_objects

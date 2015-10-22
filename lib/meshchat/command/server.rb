@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Server < Command::Base
       ONLINE = 'online'
 

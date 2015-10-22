@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     # TODO: only include this and awesome_print when booted with
     # debug=true in the config
     class IRB < Command::Base

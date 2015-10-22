@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Ping < Command::Base
       def handle
         if command_valid?

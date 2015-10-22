@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Config < Command::Base
       def handle
         case sub_command

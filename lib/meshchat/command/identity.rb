@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Identity < Command::Base
       def handle
         Display.success Settings.identity

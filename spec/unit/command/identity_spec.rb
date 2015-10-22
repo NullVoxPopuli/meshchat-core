@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::CLI::Identity do
-  let (:klass){ MeshChat::CLI::Identity }
+describe MeshChat::Command::Identity do
+  let (:klass){ MeshChat::Command::Identity }
 
   before(:each) do
     mock_settings_objects

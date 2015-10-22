@@ -18,7 +18,7 @@ describe MeshChat::CLI do
   describe '#listen_for_commands' do
     it 'creates an input' do
       cli = klass.new
-      allow(cli).to receive(:get_input) { 'chat message' }
+      allow(cli._input_device).to receive(:get_input) { 'chat message' }
       expect_any_instance_of(MeshChat::CLI::Input).to receive(:handle) {}
       cli.process_input
     end

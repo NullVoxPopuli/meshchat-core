@@ -58,7 +58,8 @@ module MeshChat
     defaults = {
       display: Display::Base,
       client_name: NAME,
-      client_version: VERSION
+      client_version: VERSION,
+      input: CLI::Base
     }
     options = defaults.merge(overrides)
 

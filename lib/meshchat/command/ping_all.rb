@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class PingAll < Command::Base
       def handle
         Node.all.each do |n|

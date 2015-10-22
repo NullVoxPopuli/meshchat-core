@@ -1,5 +1,5 @@
 module MeshChat
-  class CLI
+  class Command
     class Share < Command::Base
       def handle
         Settings.share
