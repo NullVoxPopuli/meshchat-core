@@ -39,8 +39,9 @@ describe MeshChat::Message::NodeList do
       msg.respond
     end
 
-    it 'does not send a message' do
-      expect(MeshChat::Net::Client).to_not receive(:send)
+    it 'sendsa  node list hash as confirmation that lists are in sync' do
+      expect(MeshChat::Net::Client).to receive(:send)
+      expect(MeshChat::Message::NodeListHash).to receive(:new)
       msg = klass.new
       msg.respond
     end

@@ -25,10 +25,11 @@ module MeshChat
           end
         end
 
-        if we_only_have.present?
-          location = payload['sender']['location']
 
-          node = Node.find_by_location(location)
+        location = payload['sender']['location']
+
+        node = Node.find_by_location(location)
+        if we_only_have.present?
 
           # give the sender our list
           MeshChat::Net::Client.send(
@@ -36,14 +37,23 @@ module MeshChat
             message: NodeListDiff.new(message: we_only_have)
           )
 
-          # give the network their list
+          # give people we know about
+          # (but the sender of the Node List may not know about)
+          # our node list diff
           Node.online.each do |entry|
             MeshChat::Net::Client.send(
               node: entry,
               message: NodeListDiff.new(message: they_only_have)
             )
           end
+        else
+          # lists are in sync, confirm with hash
+          MeshChat::Net::Client.send(
+            node: node,
+            message: NodeListHash.new
+          )
         end
+
       end
     end
   end

@@ -14,8 +14,8 @@ module MeshChat
         node = self.node_for(location: location, uid: uid, node: node)
 
         Thread.new(node, message) do |node, message|
-          request = MeshChat::Net::Request.new(node, message)
-          payload = { message: request.payload }
+          payload = Client.payload_for(node, message)
+
           begin
             Curl::Easy.http_post(node.location, payload.to_json) do |c|
               c.headers['Accept'] = 'application/json'
@@ -35,6 +35,12 @@ module MeshChat
             Display.debug(e.message)
           end
         end
+      end
+
+      # creates a json payload
+      def self.payload_for(node, message)
+        request = MeshChat::Net::Request.new(node, message)
+        { message: request.payload }
       end
 
       # private

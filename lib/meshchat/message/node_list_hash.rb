@@ -14,8 +14,10 @@ module MeshChat
 
       def respond
         if message != Node.as_sha512
+          Display.debug 'node list hashes do not match'
           location = payload['sender']['location']
 
+          Display.debug 'sending a node list to ' + location
           node = Node.find_by_location(location)
 
           MeshChat::Net::Client.send(

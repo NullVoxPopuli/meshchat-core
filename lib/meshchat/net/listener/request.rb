@@ -7,7 +7,14 @@ module MeshChat
 
         def initialize(input)
           self._input = try_decrypt(input)
-          self.json = JSON.parse(_input)
+
+          begin
+            self.json = JSON.parse(_input)
+          rescue => e
+            Display.debug e.message
+            Display.debug e.backtrace.join("\n")
+            raise Errors::BadRequest.new
+          end
           self.message = process_json
         end
 
@@ -15,18 +22,14 @@ module MeshChat
 
         def try_decrypt(input)
           begin
-            # TODO: do we want to try to decrypting anyway if decoding fails?
             decoded = Base64.decode64(input)
             input = Cipher.decrypt(decoded, Settings[:privateKey])
           rescue => e
             Display.debug e.message
             Display.debug e.backtrace.join("\n")
-            Display.warning e.message
-            Display.info 'It\'s possible that this message was sent in cleartext, or was encrypted with the wrong public key'
+            Display.debug input
+            raise Errors::NotAuthorized.new(e.message)
           end
-
-          Display.debug 'server received message:'
-          Display.debug input
 
           input
         end
@@ -35,10 +38,7 @@ module MeshChat
           type = json['type']
           klass = Message::TYPES[type]
 
-          unless klass
-            Display.alert 'message recieved and not recognized...'
-            return
-          end
+          raise Errors::BadRequest.new(type) unless klass
 
           klass.new(payload: json)
         end

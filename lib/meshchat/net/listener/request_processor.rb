@@ -22,9 +22,7 @@ module MeshChat
           # if the sender isn't currently marked as active,
           # perform the server list exchange
           node = Node.find_by_uid(sender['uid'])
-          if node.nil?
-            return Display.alert "#{sender['alias']} is not authorized!"
-          end
+          raise Errors::Forbidden.new if node.nil?
 
           unless node.online?
             node.update(online: true)

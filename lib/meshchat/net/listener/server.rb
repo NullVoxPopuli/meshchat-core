@@ -1,9 +1,15 @@
 require 'sinatra/base'
+require 'meshchat/net/listener/errors'
 
 module MeshChat
   module Net
     module Listener
       class Server < Sinatra::Base
+        OK = 200
+        BAD_REQUEST = 400
+        NOT_AUTHORIZED = 401
+        FORBIDDEN = 403
+
         configure :development do
           # only shows resulting status
           disable :logging
@@ -32,25 +38,11 @@ module MeshChat
         end
 
         def process_request
-          Display.debug request.env
-
           begin
             # form params should override
             # raw body
-            raw =
-              if msg = params[:message]
-                msg
-              else
-                request_body = request.body.read
-                json_body = JSON.parse(request_body)
-                json_body['message']
-              end
-
-            # decode, etc
-            RequestProcessor.process(raw)
-
-            # hopefully everything went ok
-            ok
+            raw = get_message
+            process(raw)
           rescue => e
             Display.error e.message
             Display.error e.backtrace.join("\n")
@@ -59,9 +51,32 @@ module MeshChat
           end
         end
 
-        def ok
-          status 200
-          body 'OK'
+        def get_message
+          # if received as form data
+          return params[:message] if params[:message]
+
+          # if received as json
+          request_body = request.body.read
+          json_body = JSON.parse(request_body)
+          json_body['message']
+        end
+
+        def process(raw)
+          # decode, etc
+          begin
+            RequestProcessor.process(raw)
+          rescue Errors::NotAuthorized
+            status_of NOT_AUTHORIZED
+          rescue Errors::Forbidden
+            status_of FORBIDDEN
+          rescue Errors::BadRequest
+            status_of BAD_REQUEST
+          end
+        end
+
+        def status_of(s)
+          status s
+          body ''
         end
       end
     end

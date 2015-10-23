@@ -6,7 +6,6 @@ def mock_settings_objects
   allow(MeshChat::Cipher).to receive(:current_encryptor){
       MeshChat::Encryption::Passthrough
   }
-  MeshChat::Cipher.instance_variable_set('@current_encryptor', MeshChat::Encryption::Passthrough)
 
 
   allow_any_instance_of(MeshChat::Config::Settings).to receive(:filename) { 'test-settings' }
