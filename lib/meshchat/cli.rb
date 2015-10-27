@@ -95,6 +95,7 @@ module MeshChat
     end
 
     def create_input(msg)
+      Display.debug("input: #{msg}")
       handler = Input.create(msg)
       handler.handle
     rescue => e
