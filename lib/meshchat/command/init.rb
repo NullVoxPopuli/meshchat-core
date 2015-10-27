@@ -25,7 +25,7 @@ module MeshChat
 
       def confirm?(msg)
         Display.warning(msg + ' (Y/N)')
-        response = gets
+        response = MeshChat::CLI.get_input
         response = response.chomp
         ['yes', 'y'].include?(response.downcase)
       end

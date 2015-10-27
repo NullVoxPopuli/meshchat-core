@@ -51,7 +51,12 @@ module MeshChat
         to: :instance
 
       def create(input_klass)
+        @input_klass = input_klass
         @instance = new(input_klass)
+      end
+
+      def get_input
+        instance.get_input
       end
 
       def instance
@@ -75,7 +80,7 @@ module MeshChat
     end
 
     def process_input
-      msg = _input_device.get_input
+      msg = get_input
       create_input(msg)
     rescue SystemExit, Interrupt
       close_program
@@ -83,6 +88,10 @@ module MeshChat
       Display.error e.class.name
       Display.error e.message.colorize(:red)
       Display.error e.backtrace.join("\n").colorize(:red)
+    end
+
+    def get_input
+      _input_device.get_input
     end
 
     def create_input(msg)

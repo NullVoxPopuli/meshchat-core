@@ -6,9 +6,17 @@ module MeshChat
       attr_accessor :_input
 
       class << self
+        def is_command?(input)
+          input[0, 1] == COMMAND
+        end
+
+        def is_whisper?(input)
+          input[0, 1] == WHISPER
+        end
+
         def create(input)
           klass =
-            if is_command(input)
+            if is_command?(input)
               Command::Base
             elsif is_whisper?(input)
               Command::Whisper
@@ -20,13 +28,6 @@ module MeshChat
           klass.new(input)
         end
 
-        def is_command(input)
-          input[0, 1] == COMMAND
-        end
-
-        def is_whisper?(input)
-          input[0, 1] == WHISPER
-        end
       end
 
       def initialize(input)
