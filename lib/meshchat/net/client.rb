@@ -16,28 +16,29 @@ module MeshChat
         Thread.new(node, message) do |node, message|
           begin
             payload = Client.payload_for(node, message)
-          rescue => e
-            Display.info "Public key encryption for #{node.alias_name} failed"
-            return
-          end
 
-          begin
-            Curl::Easy.http_post(node.location, payload.to_json) do |c|
-              c.headers['Accept'] = 'application/json'
-              c.headers['Content-Type'] = 'application/json'
-              if MeshChat::Settings.debug?
-                puts message.render
-                c.verbose = true
-                c.on_debug do |type, data|
-                  puts data
+            # TODO: this is horrible, come up with something better / abstract it
+            begin
+              Curl::Easy.http_post(node.location, payload.to_json) do |c|
+                c.headers['Accept'] = 'application/json'
+                c.headers['Content-Type'] = 'application/json'
+                if MeshChat::Settings.debug?
+                  puts message.render
+                  c.verbose = true
+                  c.on_debug do |type, data|
+                    puts data
+                  end
                 end
               end
+            rescue => e
+              node.update(online: false)
+              Display.info "#{node.alias_name} has ventured offline"
+              Display.debug("#{message.class.name}: Issue connectiong to #{node.alias_name}@#{node.location}")
+              Display.debug(e.message)
             end
+
           rescue => e
-            node.update(online: false)
-            Display.info "#{node.alias_name} has ventured offline"
-            Display.debug("#{message.class.name}: Issue connectiong to #{node.alias_name}@#{node.location}")
-            Display.debug(e.message)
+            Display.info "Public key encryption for #{node.alias_name} failed"
           end
         end
       end
