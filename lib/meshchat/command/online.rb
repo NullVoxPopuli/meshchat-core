@@ -10,7 +10,7 @@ module MeshChat
         msg = if list.present?
           list.join(", ")
         else
-          'no one is offline'
+          'no one is online'
         end
 
         Display.info msg

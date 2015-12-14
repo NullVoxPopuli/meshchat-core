@@ -30,6 +30,7 @@ module MeshChat
       ONLINE = 'online'
       OFFLINE = 'offline'
       HELP = 'help'
+      BIND = 'bind'
 
       def handle
         klass = CLI::COMMAND_MAP[command]

@@ -12,6 +12,7 @@ require 'meshchat/command/exit'
 require 'meshchat/command/listen'
 require 'meshchat/command/stop_listening'
 require 'meshchat/command/help'
+require 'meshchat/command/bind'
 require 'meshchat/command/online'
 require 'meshchat/command/offline'
 require 'meshchat/command/init'
@@ -41,7 +42,8 @@ module MeshChat
       MeshChat::Command::Base::EXPORT => MeshChat::Command::Share,
       MeshChat::Command::Base::ONLINE => MeshChat::Command::Offline,
       MeshChat::Command::Base::OFFLINE => MeshChat::Command::Online,
-      MeshChat::Command::Base::HELP => MeshChat::Command::Help
+      MeshChat::Command::Base::HELP => MeshChat::Command::Help,
+      MeshChat::Command::Base::BIND => MeshChat::Command::Bind
     }
 
 
