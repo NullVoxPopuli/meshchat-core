@@ -2,6 +2,10 @@ module MeshChat
   class Command
     class Server < Command::Base
       ONLINE = 'online'
+      def self.description
+        'known server statuses'
+      end
+
 
       def handle
         case sub_command

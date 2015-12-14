@@ -1,6 +1,10 @@
 module MeshChat
   class Command
     class Import < Command::Base
+      def self.description
+        'imports an identity file (formatted as json)'
+      end
+
       def handle
         if command_valid?
           node = Models::Entry.import_from_file(filename)

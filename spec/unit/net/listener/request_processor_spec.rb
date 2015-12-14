@@ -10,13 +10,15 @@ describe MeshChat::Net::Listener::RequestProcessor do
 
   describe '#update_sender_info' do
     it 'dispatches the server list hash' do
-      MeshChat::Node.new(
+      node = MeshChat::Node.new(
         uid: '100',
         alias_name: 'nullvp',
         location: 'localhost:80',
         public_key: 'wat',
         online: false
-      ).save!
+      )
+
+      node.save!
 
       json = '{
         "type":"chat",
@@ -36,6 +38,8 @@ describe MeshChat::Net::Listener::RequestProcessor do
       expect{
         klass.update_sender_info(data)
       }.to change(MeshChat::Node.online, :count).by(1)
+
+      expect(MeshChat::Node.find(node.id).location).to eq '10.10.10.10:1010'
     end
 
     it 'does not dispatch the server list hash if the message is from an active node' do

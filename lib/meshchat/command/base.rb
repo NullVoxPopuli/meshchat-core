@@ -27,6 +27,9 @@ module MeshChat
       SHARE = 'share'
       IMPORT = 'import'
       EXPORT = 'export'
+      ONLINE = 'online'
+      OFFLINE = 'offline'
+      HELP = 'help'
 
       def handle
         klass = CLI::COMMAND_MAP[command]

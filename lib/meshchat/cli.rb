@@ -11,7 +11,9 @@ require 'meshchat/command/whisper'
 require 'meshchat/command/exit'
 require 'meshchat/command/listen'
 require 'meshchat/command/stop_listening'
-require 'meshchat/command/who'
+require 'meshchat/command/help'
+require 'meshchat/command/online'
+require 'meshchat/command/offline'
 require 'meshchat/command/init'
 require 'meshchat/command/share'
 require 'meshchat/command/import'
@@ -31,13 +33,15 @@ module MeshChat
       MeshChat::Command::Base::EXIT => MeshChat::Command::Exit,
       MeshChat::Command::Base::QUIT => MeshChat::Command::Exit,
       MeshChat::Command::Base::LISTEN => MeshChat::Command::Listen,
-      MeshChat::Command::Base::WHO => MeshChat::Command::Who,
       MeshChat::Command::Base::IDENTITY => MeshChat::Command::Identity,
       MeshChat::Command::Base::IRB => MeshChat::Command::IRB,
       MeshChat::Command::Base::INIT => MeshChat::Command::Init,
       MeshChat::Command::Base::SHARE => MeshChat::Command::Share,
       MeshChat::Command::Base::IMPORT => MeshChat::Command::Import,
-      MeshChat::Command::Base::EXPORT => MeshChat::Command::Share
+      MeshChat::Command::Base::EXPORT => MeshChat::Command::Share,
+      MeshChat::Command::Base::ONLINE => MeshChat::Command::Offline,
+      MeshChat::Command::Base::OFFLINE => MeshChat::Command::Online,
+      MeshChat::Command::Base::HELP => MeshChat::Command::Help
     }
 
 

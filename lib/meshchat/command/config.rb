@@ -1,6 +1,10 @@
 module MeshChat
   class Command
     class Config < Command::Base
+      def self.description
+        'interface for setting and displaying various config options'
+      end
+
       def handle
         case sub_command
         when SET

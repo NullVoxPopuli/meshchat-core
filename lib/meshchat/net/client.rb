@@ -38,7 +38,7 @@ module MeshChat
             end
 
           rescue => e
-            Display.info "Public key encryption for #{node.alias_name} failed"
+            Display.info "Public key encryption for #{node.try(:alias_name) || 'unknown'} failed"
           end
         end
       end

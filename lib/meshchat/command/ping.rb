@@ -1,6 +1,10 @@
 module MeshChat
   class Command
     class Ping < Command::Base
+      def self.description
+        'pings a particular user'
+      end
+
       def handle
         if command_valid?
           msg = Message::Ping.new

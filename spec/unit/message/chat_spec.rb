@@ -4,6 +4,10 @@ describe MeshChat::Message::Chat do
   let(:klass) { MeshChat::Message::Chat }
 
   context 'instantiation' do
+
+    before(:each) do
+      mock_settings_objects
+    end
     it 'sets a default payload' do
       msg = klass.new
       expect(msg.payload).to_not be_nil

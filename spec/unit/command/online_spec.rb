@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe MeshChat::Command::Who do
-  let (:klass){ MeshChat::Command::Who }
+describe MeshChat::Command::Online do
+  let (:klass){ MeshChat::Command::Online }
 
   before(:each) do
     mock_settings_objects
@@ -10,7 +10,7 @@ describe MeshChat::Command::Who do
 
   describe '#handle' do
     it 'alerts the user' do
-      c = klass.new('/who')
+      c = klass.new('/online')
       #expect(c.handle).to eq MeshChat::ActiveServers.who
     end
   end

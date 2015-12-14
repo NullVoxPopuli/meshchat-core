@@ -1,6 +1,10 @@
 module MeshChat
   class Command
     class Whisper < Command::Base
+      def self.description
+        'sends a private message to a spepcific person'
+      end
+
       def target
         # get first arg
         command
