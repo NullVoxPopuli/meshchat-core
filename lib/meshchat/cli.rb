@@ -40,8 +40,8 @@ module MeshChat
       MeshChat::Command::Base::SHARE => MeshChat::Command::Share,
       MeshChat::Command::Base::IMPORT => MeshChat::Command::Import,
       MeshChat::Command::Base::EXPORT => MeshChat::Command::Share,
-      MeshChat::Command::Base::ONLINE => MeshChat::Command::Offline,
-      MeshChat::Command::Base::OFFLINE => MeshChat::Command::Online,
+      MeshChat::Command::Base::ONLINE => MeshChat::Command::Online,
+      MeshChat::Command::Base::OFFLINE => MeshChat::Command::Offline,
       MeshChat::Command::Base::HELP => MeshChat::Command::Help,
       MeshChat::Command::Base::BIND => MeshChat::Command::Bind
     }

@@ -6,12 +6,7 @@ module MeshChat
       end
 
       def handle
-        list = Node.online.map(&:as_info)
-        msg = if list.present?
-          list.join(", ")
-        else
-          'no one is online'
-        end
+        msg = Node.online.map(&:as_info).join(", ").presence || 'no one is online'
 
         Display.info msg
       end
