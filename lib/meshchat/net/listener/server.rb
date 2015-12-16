@@ -22,11 +22,12 @@ module MeshChat
         # we can't decrypt?
 
         def self.run!(*)
+          # any code that should be ran
+          # before sintra starts should go here
+
           # start the server
           super
-
-          # send a pingall to see who's online
-          MeshChat::Command::PingAll.new.handle
+          # code after here will not run
         end
 
         get '/' do
@@ -77,6 +78,34 @@ module MeshChat
         def status_of(s)
           status s
           body ''
+        end
+
+        # Hack away our problems
+        # don't show the Sinatra has taken the stage message
+        #
+        # https://github.com/sinatra/sinatra/blob/master/lib/sinatra/base.rb#L1504
+        def self.start_server(handler, server_settings, handler_name)
+          handler.run(self, server_settings) do |server|
+
+            setup_traps
+            set :running_server, server
+            set :handler_name,   handler_name
+            server.threaded = settings.threaded if server.respond_to? :threaded=
+
+            yield server if block_given?
+          end
+        end
+
+        # Hack away our problems
+        # Don't show the Sinatra quit message
+        #
+        # https://github.com/sinatra/sinatra/blob/master/lib/sinatra/base.rb#L1420
+        def self.quit!
+          return unless running?
+          # Use Thin's hard #stop! if available, otherwise just #stop.
+          running_server.respond_to?(:stop!) ? running_server.stop! : running_server.stop
+          set :running_server, nil
+          set :handler_name, nil
         end
       end
     end

@@ -130,6 +130,7 @@ module MeshChat
       Thin::Logging.silent = true
 
       Thread.new do
+        # boot sinatra
         MeshChat::Net::Listener::Server.run!(
           port: MeshChat::Settings['port'],
           # logger: MeshChat::Display,
