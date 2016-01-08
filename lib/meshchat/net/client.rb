@@ -61,7 +61,7 @@ module MeshChat
         # TODO: also check for public key?
         # without the public key, the message is sent in cleartext. :-\
         if !(node && node.location)
-          Display.alert "Node not found, or does not have a location"
+          Display.alert "Node not found, or does not have a location. Have you imported #{location || ""}?"
           return
         end
 
