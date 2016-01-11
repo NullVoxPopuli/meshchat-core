@@ -62,6 +62,10 @@ module MeshChat
         MeshChat.version
       end
 
+      def sender
+        payload['sender']
+      end
+
       # shows the message
       # should be used locally, before *sending* a message
       def display

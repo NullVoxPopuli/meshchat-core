@@ -10,8 +10,9 @@ module MeshChat
           message = request.message
 
           # TODO: wrap in debug if check
-          Display.debug('SERVER: ' + request.inspect)
-          Display.debug('SERVER: ' + message.inspect)
+          Display.debug('RECEIVING: ' + message.type)
+          Display.debug('RECEIVING: ' + message.sender.to_s)
+          Display.debug('RECEIVING: ' + message.message.to_s)
 
           # handle the message
           Display.present_message message

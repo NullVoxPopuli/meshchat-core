@@ -16,12 +16,12 @@ module MeshChat
         received_list = message
         we_only_have, they_only_have = Node.diff(received_list)
 
+        Display.debug('node_list#respond: me: ' + we_only_have.to_s)
+        Display.debug('node_list#respond: they: ' + they_only_have.to_s)
+
         if they_only_have.present?
           they_only_have.each do |n|
-            # be sure that we don't add ourselves
-            unless n['uid'] == Settings['uid']
-              Node.from_json(n).save!
-            end
+            Node.from_json(n).save!
           end
         end
 
@@ -30,6 +30,7 @@ module MeshChat
 
         node = Node.find_by_location(location)
         if we_only_have.present?
+          Display.debug 'we have nodes that they do not'
 
           # give the sender our list
           MeshChat::Net::Client.send(
@@ -47,6 +48,8 @@ module MeshChat
             )
           end
         else
+          Display.debug 'node lists are in sync'
+
           # lists are in sync, confirm with hash
           MeshChat::Net::Client.send(
             node: node,
