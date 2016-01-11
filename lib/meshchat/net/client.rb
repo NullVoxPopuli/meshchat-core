@@ -12,6 +12,8 @@ module MeshChat
       def send(location: nil, uid: nil, node: nil, message: nil)
         # verify node is valid
         node = self.node_for(location: location, uid: uid, node: node)
+        # don't proceed if we don't have a node
+        return unless node
 
         if Settings['uid'] == node.uid
           Display.debug 'avoiding sending to self'
