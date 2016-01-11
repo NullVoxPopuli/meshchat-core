@@ -46,7 +46,7 @@ module MeshChat
             alias_name: json['alias'],
             location: json['location'],
             uid: json['uid'],
-            public_key: json['publicKey']
+            public_key: json['publickey']
           )
         end
 
@@ -92,7 +92,7 @@ module MeshChat
           'alias' => alias_name,
           'location' => location,
           'uid' => uid,
-          'publicKey' => public_key
+          'publickey' => public_key
         }
       end
 

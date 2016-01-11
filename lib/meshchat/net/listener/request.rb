@@ -23,7 +23,7 @@ module MeshChat
         def try_decrypt(input)
           begin
             decoded = Base64.decode64(input)
-            input = Cipher.decrypt(decoded, Settings[:privateKey])
+            input = Cipher.decrypt(decoded, Settings[:privatekey])
           rescue => e
             Display.debug e.message
             Display.debug e.backtrace.join("\n")

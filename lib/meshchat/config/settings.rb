@@ -8,7 +8,7 @@ module MeshChat
         'port' => '2008',
         'ip' => 'localhost',
         'uid' => '1',
-        'publicKey' => 'replace this'
+        'publickey' => 'replace this'
       }
 
       class << self
@@ -33,7 +33,7 @@ module MeshChat
           'alias' => self['alias'],
           'location' => location,
           'uid' => self['uid'],
-          'publicKey' => public_key
+          'publickey' => public_key
         }
       end
 
@@ -54,11 +54,11 @@ module MeshChat
       end
 
       def public_key
-        self['publicKey']
+        self['publickey']
       end
 
       def private_key
-        self['privatKey']
+        self['privatkey']
       end
 
       # generates 32 bytes
@@ -69,14 +69,14 @@ module MeshChat
 
       def generate_keys
         @key_pair = OpenSSL::PKey::RSA.new(2048)
-        self['publicKey'] = @key_pair.public_key.to_pem
-        self['privateKey'] = @key_pair.to_pem
+        self['publickey'] = @key_pair.public_key.to_pem
+        self['privatekey'] = @key_pair.to_pem
         Display.success 'new keys generated'
       end
 
       def key_pair
         if !@key_pair && keys_exist?
-          @key_pair = OpenSSL::PKey::RSA.new(self['privateKey'] + self['publicKey'])
+          @key_pair = OpenSSL::PKey::RSA.new(self['privatekey'] + self['publickey'])
         end
         @key_pair
       end

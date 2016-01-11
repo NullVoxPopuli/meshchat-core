@@ -21,7 +21,7 @@ describe MeshChat::Message::NodeListDiff do
             'alias' => 'hi',
             'location' => '2.2.2.2:222',
             'uid' => '222',
-            'publicKey' => '1233333'
+            'publickey' => '1233333'
           }
         ])
 

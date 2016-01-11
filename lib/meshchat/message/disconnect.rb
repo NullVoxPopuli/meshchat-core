@@ -1,6 +1,6 @@
 module MeshChat
   module Message
-    class Disconnection < Base
+    class Disconnect < Base
       def display
         location = payload['sender']['location']
         name = payload['sender']['alias']

@@ -2,7 +2,7 @@ require 'meshchat/message/base'
 require 'meshchat/message/chat'
 require 'meshchat/message/ping'
 require 'meshchat/message/ping_reply'
-require 'meshchat/message/disconnection'
+require 'meshchat/message/disconnect'
 require 'meshchat/message/whisper'
 require 'meshchat/message/relay'
 require 'meshchat/message/node_list'
@@ -16,7 +16,7 @@ module MeshChat
     PING_REPLY = 'pingreply'
     WHISPER = 'whisper'
     RELAY = 'relay'
-    DISCONNECTION = 'disconnection'
+    DISCONNECT = 'disconnect'
 
     NODE_LIST = 'nodelist'
     NODE_LIST_HASH = 'nodelisthash'
@@ -25,7 +25,7 @@ module MeshChat
     TYPES = {
       CHAT => Chat,
       WHISPER => Whisper,
-      DISCONNECTION => Disconnection,
+      DISCONNECT => Disconnect,
       PING => Ping,
       PING_REPLY => PingReply,
       NODE_LIST => NodeList,

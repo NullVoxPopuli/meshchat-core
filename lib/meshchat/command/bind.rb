@@ -25,15 +25,18 @@ module MeshChat
           Display.alert 'Invalid selection'
           handle # repeat
         end
-
-
       end
 
       def ip_addresses
         local =  Socket.getifaddrs.map { |i| i.addr.ip_address if i.addr.ipv4? }.compact
         # get public
-        remote_ip = open('http://whatismyip.akamai.com').read
-        local << remote_ip
+        begin
+          remote_ip = open('http://whatismyip.akamai.com').read
+          local << remote_ip
+        rescue => e
+          Display.fatal e.message
+          Display.alert 'public ip lookup failed'
+        end
         local
       end
     end

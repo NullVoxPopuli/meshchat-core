@@ -35,7 +35,7 @@ describe MeshChat::Net::Listener::Server do
     context 'throws exceptions' do
       context 'not authorized' do
         it 'cannot be decrypted' do
-          MeshChat::Settings[:privateKey] = @private_key1
+          MeshChat::Settings[:privatekey] = @private_key1
           message = MeshChat::Message::Ping.new
           raw = MeshChat::Net::Client.payload_for(@node_me, message)[:message]
 
@@ -45,7 +45,7 @@ describe MeshChat::Net::Listener::Server do
 
       context 'forbidden' do
         it 'receives a message from a non-existant node' do
-          MeshChat::Settings[:privateKey] = @private_key
+          MeshChat::Settings[:privatekey] = @private_key
           message = MeshChat::Message::Ping.new
           raw = MeshChat::Net::Client.payload_for(@node_me, message)[:message]
 
@@ -55,7 +55,7 @@ describe MeshChat::Net::Listener::Server do
 
       context 'bad request' do
         it 'uses an unsupported type' do
-          MeshChat::Settings[:privateKey] = @private_key
+          MeshChat::Settings[:privatekey] = @private_key
           message = MeshChat::Message::Ping.new
           message.instance_variable_set('@type', 'unsupported')
           raw = MeshChat::Net::Client.payload_for(@node_me, message)[:message]

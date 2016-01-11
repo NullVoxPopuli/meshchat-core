@@ -11,6 +11,7 @@ require 'meshchat/command/whisper'
 require 'meshchat/command/exit'
 require 'meshchat/command/listen'
 require 'meshchat/command/stop_listening'
+require 'meshchat/command/send_disconnect'
 require 'meshchat/command/help'
 require 'meshchat/command/bind'
 require 'meshchat/command/online'
@@ -43,7 +44,8 @@ module MeshChat
       MeshChat::Command::Base::ONLINE => MeshChat::Command::Online,
       MeshChat::Command::Base::OFFLINE => MeshChat::Command::Offline,
       MeshChat::Command::Base::HELP => MeshChat::Command::Help,
-      MeshChat::Command::Base::BIND => MeshChat::Command::Bind
+      MeshChat::Command::Base::BIND => MeshChat::Command::Bind,
+      MeshChat::Command::Base::SEND_DISCONNECT => MeshChat::Command::SendDisconnect
     }
 
 
@@ -168,8 +170,14 @@ module MeshChat
       # close_server
       Display.info 'saving config...'
       Settings.save
+      Display.info 'notifying of disconnection...'
+      send_disconnect
       Display.alert "\n\nGoodbye.  \n\nThank you for using #{MeshChat.name}"
       exit
+    end
+
+    def send_disconnect
+      MeshChat::Command::SendDisconnect.new('/senddisconnect')
     end
   end
 end

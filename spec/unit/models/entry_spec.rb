@@ -14,7 +14,7 @@ describe MeshChat::Models::Entry do
         'alias' => 'shared',
         'location' => '1.1.1.1:8000',
         'uid' => '1',
-        'publicKey' => 'a'
+        'publickey' => 'a'
       }
     }
 
@@ -23,7 +23,7 @@ describe MeshChat::Models::Entry do
         'alias' => 'ours',
         'location' => '1.1.1.1:8001',
         'uid' => '2',
-        'publicKey' => 'b'
+        'publickey' => 'b'
       }
     }
 
@@ -32,7 +32,7 @@ describe MeshChat::Models::Entry do
         'alias' => 'theirs',
         'location' => '1.1.1.1:8002',
         'uid' => '3',
-        'publicKey' => 'c'
+        'publickey' => 'c'
       }
     }
 
@@ -57,7 +57,7 @@ describe MeshChat::Models::Entry do
         'alias' => 'alias',
         'location' => '1.1.1.1:8080',
         'uid' => '1',
-        'publicKey' => '123'
+        'publickey' => '123'
       }
       m = klass.new(
         alias_name: 'alias',
@@ -82,7 +82,7 @@ describe MeshChat::Models::Entry do
         'alias' => 'alias',
         'location' => '1.1.1.1:8080',
         'uid' => '1',
-        'publicKey' => '123'
+        'publickey' => '123'
       }
 
       expect(m.as_json).to eq expected
