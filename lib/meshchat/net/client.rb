@@ -10,14 +10,13 @@ module MeshChat
       # @param [Node] node (Optional) target
       # @param [Message] message (Required) what to send to the target
       def send(location: nil, uid: nil, node: nil, message: nil)
-        if Settings['uid'] == uid
-          Display.debug 'avoiding sending to self'
-          return
-        end
-
         # verify node is valid
         node = self.node_for(location: location, uid: uid, node: node)
 
+        if Settings['uid'] == node.uid
+          Display.debug 'avoiding sending to self'
+          return
+        end
 
         Thread.new(node, message) do |node, message|
           begin
