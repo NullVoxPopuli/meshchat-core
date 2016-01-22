@@ -17,6 +17,13 @@ module MeshChat
         fail 'overload this method'
       end
 
+
+      # an emote
+      def emote(_line)
+        fail 'overload this method'
+      end
+
+
       # server info or other ignorable information
       def info(_line)
         fail 'overload this method'

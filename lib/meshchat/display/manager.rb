@@ -9,6 +9,7 @@ module MeshChat
       delegate :start, to: :_ui
       delegate :add_line, to: :_ui
       delegate :info, to: :_ui
+      delegate :emote, to: :_ui
       delegate :warning, to: :_ui
       delegate :alert, to: :_ui
       delegate :success, to: :_ui
@@ -35,6 +36,9 @@ module MeshChat
           Notify.show(summary: message.sender_name, body: message.message)
         when Message::Whisper.name
           whisper result
+          Notify.show(summary: message.sender_name, body: message.message)
+        when Message::Emote.name
+          emote result
           Notify.show(summary: message.sender_name, body: message.message)
         when Message::PingReply.name, Message::Ping.name
           info result

@@ -11,6 +11,7 @@ module MeshChat
     def start(*args); current.start(*args); end
     def add_line(*args); current.add_line(*args); end
     def info(*args); current.info(*args); end
+    def emote(*args); current.emote(*args); end
     def warning(*args); current.warning(*args); end
     def alert(*args); current.alert(*args); end
     def success(*args); current.success(*args); end

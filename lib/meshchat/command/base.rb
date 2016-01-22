@@ -32,9 +32,11 @@ module MeshChat
       HELP = 'help'
       BIND = 'bind'
       SEND_DISCONNECT = 'senddisconnect'
+      EMOTE = 'me'
 
       def handle
         klass = CLI::COMMAND_MAP[command]
+        Display.debug("INPUT: #{klass.name} from #{command} derived from #{_input}")
         if klass
           klass.new(_input).handle
         else
@@ -43,6 +45,16 @@ module MeshChat
       end
 
       protected
+
+      def corresponding_message_class
+        my_kind = self.class.name.demodulize
+        message_root_name = MeshChat::Message.name
+        message_class_name = "#{message_root_name}::#{my_kind}"
+
+        Display.debug("Corresponding: #{message_class_name}")
+
+        message_class_name.constantize
+      end
 
       def command_string
         @command_string ||= _input[1, _input.length]

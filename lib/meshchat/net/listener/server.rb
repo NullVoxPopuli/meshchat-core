@@ -77,7 +77,7 @@ module MeshChat
 
         def status_of(s)
           status s
-          Display.debug('SERVER: ' + s)
+          Display.debug('SERVER: ' + s.inspect)
           body ''
         end
 

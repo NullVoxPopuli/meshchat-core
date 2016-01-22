@@ -1,6 +1,7 @@
 require 'meshchat/cli/input'
 require 'meshchat/cli/base'
 require 'meshchat/command/base'
+require 'meshchat/command/chat'
 require 'meshchat/command/identity'
 require 'meshchat/command/irb'
 require 'meshchat/command/config'
@@ -19,6 +20,7 @@ require 'meshchat/command/offline'
 require 'meshchat/command/init'
 require 'meshchat/command/share'
 require 'meshchat/command/import'
+require 'meshchat/command/emote'
 
 
 module MeshChat
@@ -45,7 +47,10 @@ module MeshChat
       MeshChat::Command::Base::OFFLINE => MeshChat::Command::Offline,
       MeshChat::Command::Base::HELP => MeshChat::Command::Help,
       MeshChat::Command::Base::BIND => MeshChat::Command::Bind,
-      MeshChat::Command::Base::SEND_DISCONNECT => MeshChat::Command::SendDisconnect
+      MeshChat::Command::Base::SEND_DISCONNECT => MeshChat::Command::SendDisconnect,
+      MeshChat::Command::Base::EMOTE => MeshChat::Command::Emote,
+      MeshChat::Command::Base::CHAT => MeshChat::Command::Chat
+
     }
 
 

@@ -7,7 +7,12 @@ module MeshChat
         name = payload['sender']['alias']
         message = payload['message']
 
-        "#{time_recieved} #{name} > #{message}"
+        format_display(time_recieved, name, message)
+      end
+
+
+      def format_display(time, name, message)
+        "#{time} #{name} > #{message}"
       end
     end
   end

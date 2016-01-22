@@ -7,7 +7,9 @@ module MeshChat
 
       def handle
         MeshChat::CLI::COMMAND_MAP.each do |key, klass|
-          Display.info "/#{key}\t\t" + klass.description
+          if klass.respond_to?(:description)
+            Display.info "/#{key}\t\t" + klass.description
+          end
         end
       end
     end
