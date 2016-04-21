@@ -9,37 +9,19 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require current_dir + '/lib/meshchat'
 
 module Debug
-  class CLIInput < MeshChat::CLI::Base
-    class << self
-      def autocompletes
-        commands = MeshChat::CLI::COMMAND_MAP.map { |k, _v| "/#{k}" }
-        aliases = MeshChat::Node.all.map { |n| "#{n.alias_name}" }
-        commands + aliases
-      end
-    end
-
-    # called every time meshchat wants a line of text from the user
-    def get_input
-      # update auto completion
-      completion = proc { |s| self.class.autocompletes.grep(/^#{Regexp.escape(s)}/) }
-      Readline.completion_proc = completion
-
-      Readline.readline('> ', true)
-    end
-  end
-end
-
-module Debug
   class CLIOutput < MeshChat::Display::Base
     def start
       puts "\n"
       alert 'Welcome to Spiced Rumby!'
       puts "\n"
       puts "\n"
-      yield if block_given?
-
-      MeshChat::CLI.listen_for_commands
     end
+
+    def fatal(*args); alert(*args); end
+
+    def debug(*args); warning(*args); end
+
+    def error(*args); alert(*args); end
 
     # TODO: find a more elegant way to handle color
     def add_line(line)
@@ -51,11 +33,11 @@ module Debug
     end
 
     def warning(msg)
-      puts msg.colorize(:yellow)
+      puts msg.colorize(:yellow) if msg
     end
 
     def alert(msg)
-      puts msg.colorize(:red)
+      puts msg.colorize(:red) if msg
     end
 
     def success(msg)
@@ -89,5 +71,4 @@ end
 
 MeshChat.start(
   display: Debug::CLIOutput, # your class implementing `Display::Base`
-  input: Debug::CLIInput, # your class implementing `CLI::Base`
 )

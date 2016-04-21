@@ -13,7 +13,8 @@ require 'awesome_print'
 require 'sqlite3'
 require 'active_record'
 require 'curb'
-require 'thin'
+require 'eventmachine'
+require 'i18n'
 
 # active support extensions
 require 'active_support/core_ext/module/delegation'
@@ -23,7 +24,6 @@ require 'active_support/core_ext/object/try'
 # local files for meshchat
 require 'meshchat/version'
 require 'meshchat/database'
-require 'meshchat/instance'
 require 'meshchat/encryption'
 require 'meshchat/display'
 require 'meshchat/display/manager'
@@ -34,13 +34,16 @@ require 'meshchat/config/settings'
 require 'meshchat/net/request'
 require 'meshchat/net/client'
 require 'meshchat/net/listener/request'
+require 'meshchat/net/listener/message_processor'
 require 'meshchat/net/listener/request_processor'
 require 'meshchat/net/listener/server'
 require 'meshchat/cli'
 require 'meshchat/message'
+require 'meshchat/identity'
+require 'meshchat/configuration'
+require 'meshchat/mesh_relay'
 
 module MeshChat
-  NAME = 'MeshChat'
   Settings = Config::Settings
   Node = Models::Entry
   Cipher = Encryption
@@ -51,25 +54,44 @@ module MeshChat
   # @option overrides [Proc] on_display_start what to do upon start of the display manager
   # @option overrides [class] display the display ui to use inherited from Display::Base
   def start(overrides = {})
-    defaults = {
-      display: Display::Base,
-      client_name: NAME,
-      client_version: VERSION,
-      input: CLI::Base,
-      notifier: Notifier::Base
-    }
-    options = defaults.merge(overrides)
+    app_config = Configuration.new(overrides)
 
-    # before doing anything, ensure we have a place to store data
+    # Check user config, go through initial setup if we haven't done so already.
+    # This should only need to be done once per user.
+    #
+    # This will also generate a whatever-alias-you-choose.json that the user
+    # can pass around to someone gain access to the network.
+    #
+    # Personal settings are stored in settings.json. This should never be
+    # shared with anyone.
+    Identity.check_or_create
+
+    # setup the storage - for keeping track of nodes on the network
     Database.setup_storage
 
-    # set up the notifier (if there is one)
-    const_set(:Notify, options[:notifier])
+    # if everything is configured correctly, boot the app
+    # this handles all of the asyncronous stuff
+    EventMachine.run do
+      # 1. hook up the display / output 'device'
+      #    - responsible for notifications
+      display = CurrentDisplay
 
-    # set the options / overrides!
-    Instance.start(options)
+      # 2. boot up the http server
+      #    - for listening for incoming requests
+      port = Settings['port']
+      server_class = MeshChat::Net::Listener::Server
+      EM.start_server '0.0.0.0', port, server_class
+
+      # 3. boot up the action cable client
+      #    - responsible for the relay server if the http client can't
+      #    - find the recipient
+      relay = MeshRelay.new
+      relay.setup
+
+      # 4. hook up the keyboard / input 'device'
+      #    - tesponsible for parsing input
+      input_receiver = CLI.new(relay, display)
+      EM.open_keyboard(app_config[:input], input_receiver)
+    end
   end
-
-  def name; Instance.client_name; end
-  def version; Instance.client_version; end
 end

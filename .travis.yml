@@ -1,11 +1,18 @@
 language: ruby
-bundler_args: --without guard
+bundler_args: "--without guard"
 rvm:
-  - "2.0"
-  - "2.1"
-  - "2.2"
-  - ruby-head
-script: "bundle exec rspec"
+- 2.3.0
+- ruby-head
+script: bundle exec rspec
+after_script:
+- git config --global user.email "nobody@nobody.org"
+- git config --global user.name "Travis CI"
+- cd $TRAVIS_BUILD_DIR && yardoc 'lib/**/*.rb' - README.md LICENSE
+- sh -c 'cd $TRAVIS_BUILD_DIR/doc/ && git init && git remote add origin "https://$GITHUB_TOKEN@github.com/NullVoxPopuli/meshchat.git"' > /dev/null
+- cd $TRAVIS_BUILD_DIR/doc/ && git checkout --orphan gh-pages
+- cd $TRAVIS_BUILD_DIR/doc/ && git add .
+- sh -c 'cd $TRAVIS_BUILD_DIR/doc/ && git commit -m"Generate Docs"' > /dev/null
+- sh -c 'cd $TRAVIS_BUILD_DIR/doc/ && git push -u origin gh-pages -f' > /dev/null
 addons:
   code_climate:
     repo_token: ebeb5501b6c1565ecae39466e571a52c956796eb6782caa1bfcfd24e9a99ea39
@@ -13,8 +20,10 @@ branches:
   only: master
 notifications:
   email: false
-
 matrix:
   fast_finish: true
   allow_failures:
-    - rvm: ruby-head
+  - rvm: ruby-head
+env:
+  global:
+    secure: pVBoxxsc4GyGI/+I2pkbxOh8gOtVcCykHq3JqyJ6zh0WtOYFLWzf6Ee/6+gwyn5NsjkEybX9wL/sc2+LLMItwPCrq/U2Cg+j3PBDLcayHlxcO7/+FQo6k8W3ZahamugJeTsRxn0uI3dq40k+dS3hcSqi12Jb3RAM7PccVVa7ov2bIgPxzs4pLoHShEMZ7DJk656bUmR3Mi+5TOn7ISy+p/dPXA0T8cqMM7cEhAMgCt/f5clpfKuxzG2Ih3sqUxBB7Wqc0GDLhv/gETlUcbU2iJGW57DuYEvGk2QmqmTcJUfFbR8hr0tH8+rgeJJfUb49dEd5oEdj3WM2AL/En7+jvxzb0zkFffDZFk7WLUSqNeiZVbKZGhatRtsgvvOUq3qr4UIYpfYcRi5iP9XLhDrfCvBzsITuu+cXR26OFJND0ye7tqqZ/valpj/ZDcnPJdcOdRRmUDDnDXVIobdMf+HdPO+OQBeTRhb2sMcjBGdvO3D24iaCO2d9tu6XHT1Ggm9UXgKTBNU/tNwo+DELdNvAlaUniohGDwlly5pghob9Wl4lfXs8Oy7XkhoPQH4Qs0i9KF1Zth3uc2MmYeGDkxWuKeRx47JPJnYjPkNXrL7fDpwc7q6tttY6k/n/RgtHLnIQwZCeCIbe/xtUpay3REiQBPG3T9UxvlHcYz/jGkPRtKo=
