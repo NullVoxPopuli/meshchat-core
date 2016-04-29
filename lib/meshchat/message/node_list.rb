@@ -25,16 +25,14 @@ module MeshChat
           end
         end
 
+        uid = payload['sender']['uid']
 
-        location = payload['sender']['location']
-
-        node = Node.find_by_location(location)
         if we_only_have.present?
           Display.debug 'we have nodes that they do not'
 
           # give the sender our list
-          MeshChat::Net::Client.send(
-            node: node,
+          message_dispatcher.send_message(
+            uid: uid,
             message: NodeListDiff.new(message: we_only_have)
           )
 
@@ -42,7 +40,7 @@ module MeshChat
           # (but the sender of the Node List may not know about)
           # our node list diff
           Node.online.each do |entry|
-            MeshChat::Net::Client.send(
+            message_dispatcher.send_message(
               node: entry,
               message: NodeListDiff.new(message: they_only_have)
             )
@@ -51,10 +49,7 @@ module MeshChat
           Display.debug 'node lists are in sync'
 
           # lists are in sync, confirm with hash
-          MeshChat::Net::Client.send(
-            node: node,
-            message: NodeListHash.new
-          )
+          message_dispatcher.send_message(uid: uid, message: NodeListHash.new)
         end
 
       end

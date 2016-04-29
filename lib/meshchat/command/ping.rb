@@ -13,7 +13,7 @@ module MeshChat
 
           node =
             if field == 'location'
-              Node.find_by_location(lookup_value)
+              Node.find_by_location_on_network(lookup_value)
             else
               Node.find_by_alias_name(lookup_value)
             end
@@ -24,10 +24,7 @@ module MeshChat
             return Display.alert "#{lookup_value} could not be found"
           end
 
-          Net::Client.send(
-            node: node,
-            message: msg
-          )
+          _message_dispatcher.send_message(node: node, message: msg)
         else
           Display.alert usage
         end

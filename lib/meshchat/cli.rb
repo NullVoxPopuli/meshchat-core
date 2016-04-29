@@ -70,22 +70,20 @@ module MeshChat
       end
     end
 
-    attr_reader :_relay
+    attr_reader :_message_dispatcher
 
 
-    def initialize(relay, display)
-      @_relay = relay
+    def initialize(message_dispatcher, display)
+      @_message_dispatcher = message_dispatcher
       self.class.instance_variable_set('@instance', self)
     end
 
     def create_input(msg)
       Display.debug("input: #{msg}")
-      handler = Input.create(msg)
+      handler = Input.create(msg, _message_dispatcher)
       handler.handle
     rescue => e
-      Display.error e.message
-      Display.error e.class.name
-      Display.error e.backtrace.join("\n").colorize(:red)
+      Debug.creating_input_failed(e)
     end
 
     def server_location
@@ -108,7 +106,7 @@ module MeshChat
     end
 
     def send_disconnect
-      MeshChat::Command::SendDisconnect.new('/senddisconnect')
+      MeshChat::Command::SendDisconnect.new('/senddisconnect', _message_dispatcher)
     end
   end
 end

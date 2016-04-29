@@ -12,7 +12,6 @@ require 'logger'
 require 'awesome_print'
 require 'sqlite3'
 require 'active_record'
-require 'curb'
 require 'eventmachine'
 require 'i18n'
 
@@ -23,6 +22,10 @@ require 'active_support/core_ext/object/try'
 
 # local files for meshchat
 require 'meshchat/version'
+# debug logging....
+# ^ at least util 'all' scenarios are captured via tests
+require 'meshchat/debug'
+# everything else
 require 'meshchat/database'
 require 'meshchat/encryption'
 require 'meshchat/display'
@@ -32,7 +35,9 @@ require 'meshchat/models/entry'
 require 'meshchat/config/hash_file'
 require 'meshchat/config/settings'
 require 'meshchat/net/request'
-require 'meshchat/net/client'
+require 'meshchat/net/message_dispatcher/relay'
+require 'meshchat/net/message_dispatcher/http_client'
+require 'meshchat/net/message_dispatcher'
 require 'meshchat/net/listener/request'
 require 'meshchat/net/listener/message_processor'
 require 'meshchat/net/listener/request_processor'
@@ -41,7 +46,6 @@ require 'meshchat/cli'
 require 'meshchat/message'
 require 'meshchat/identity'
 require 'meshchat/configuration'
-require 'meshchat/mesh_relay'
 
 module MeshChat
   Settings = Config::Settings
@@ -74,23 +78,25 @@ module MeshChat
     EventMachine.run do
       # 1. hook up the display / output 'device'
       #    - responsible for notifications
+      #    - created in Configuration
       display = CurrentDisplay
 
-      # 2. boot up the http server
+      # 2. create the message dispatcher
+      #    - sends the messages out to the network
+      #    - tries p2p first, than uses the relays
+      message_dispatcher = Net::MessageDispatcher.new
+
+      # 3. boot up the http server
       #    - for listening for incoming requests
       port = Settings['port']
       server_class = MeshChat::Net::Listener::Server
-      EM.start_server '0.0.0.0', port, server_class
-
-      # 3. boot up the action cable client
-      #    - responsible for the relay server if the http client can't
-      #    - find the recipient
-      relay = MeshRelay.new
-      relay.setup
+      EM.start_server '0.0.0.0', port, server_class, message_dispatcher
 
       # 4. hook up the keyboard / input 'device'
       #    - tesponsible for parsing input
-      input_receiver = CLI.new(relay, display)
+      input_receiver = CLI.new(message_dispatcher, display)
+      # by default the app_config[:input] is
+      # MeshChat::Cli::KeyboardLineInput
       EM.open_keyboard(app_config[:input], input_receiver)
     end
   end
