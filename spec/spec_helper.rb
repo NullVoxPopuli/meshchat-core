@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rubygems'
 require 'bundler/setup'
 
@@ -6,18 +7,18 @@ require 'pry-byebug' # binding.pry to debug!
 # Coverage
 ENV['CODECLIMATE_REPO_TOKEN'] = 'ebeb5501b6c1565ecae39466e571a52c956796eb6782caa1bfcfd24e9a99ea39'
 require 'codeclimate-test-reporter'
+# require 'simplecov'
 CodeClimate::TestReporter.start
 
+# SimpleCov.minimum_coverage 80
+SimpleCov.start do
+  # add_group 'encryption', 'lib/meshchat/encryption'
+  # add_group 'models', 'lib/meshchat/models'
+  # add_group 'network', 'lib/meshchat/network'
+  # add_gorup 'ui', 'lib/meshchat/ui'
+end
 # This Gem
 require 'meshchat'
-MeshChat.const_set(:Notify, MeshChat::Notifier::Base)
-
-SimpleCov.start do
-  # add_filter "/lib/meshchat/display/bash/"
-  # add_filter "/lib/meshchat/display/null/"
-  # add_filter "/lib/meshchat/display/terminal_curses/"
-end
-
 
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |file| require file }
 
@@ -36,6 +37,12 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.before(:all) do
+    Meshchat::Configuration::AppConfig.new(
+      display: MeshchatStub::Display::Null::UI
+    )
+  end
 
   config.before(:each) do
     setup_database

@@ -1,8 +1,27 @@
-module MeshChat
+# frozen_string_literal: true
+module Meshchat
   # This file is stupid.
   # But very helpful when debugging problems...
   module Debug
     module_function
+
+    # TODO: extract this idea to a gem
+    #       - automatic logging of method calls
+    def log(method_list)
+      method_list = Array[method_list]
+      method_list.each do |method|
+        backup_name = "#{method}_bak".to_sym
+        alias_method :backup_name, :method
+        define_method(method) do |*args|
+          Display.debug("##{method}: ")
+          Display.debug(args.inspect)
+        end
+      end
+    end
+
+    def message_type_not_found(type)
+      Display.debug('Type not found: ' + type.to_s)
+    end
 
     def not_on_local_network(node)
       Display.debug('SENDING: ' + node.alias_name + ' is not on the local network')
@@ -27,7 +46,6 @@ module MeshChat
       Display.debug('RECEIVING: ' + message.message.to_s)
     end
 
-
     def sending_message(message)
       Display.debug('SENDING: ' + message.type)
       Display.debug('SENDING: ' + message.sender.to_s)
@@ -45,9 +63,7 @@ module MeshChat
 
     def creating_input_failed(e)
       Display.error e.message
-      Display.error e.class.name
       Display.error e.backtrace.join("\n").colorize(:red)
     end
-
   end
 end

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 current_dir = File.dirname(__FILE__)
 # set load path (similar to how gems require files (relative to lib))
@@ -9,7 +10,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require current_dir + '/lib/meshchat'
 
 module Debug
-  class CLIOutput < MeshChat::Display::Base
+  class CLIOutput < Meshchat::Ui::Display::Base
     def start
       puts "\n"
       alert 'Welcome to Spiced Rumby!'
@@ -17,11 +18,17 @@ module Debug
       puts "\n"
     end
 
-    def fatal(*args); alert(*args); end
+    def fatal(*args)
+      alert(*args)
+    end
 
-    def debug(*args); warning(*args); end
+    def debug(*args)
+      warning(*args)
+    end
 
-    def error(*args); alert(*args); end
+    def error(*args)
+      alert(*args)
+    end
 
     # TODO: find a more elegant way to handle color
     def add_line(line)
@@ -29,7 +36,19 @@ module Debug
     end
 
     def info(msg)
-      puts msg.colorize(:light_black)
+      message_parts_for(msg) do |_time, _from, message|
+        puts message.colorize(:light_black)
+      end
+    end
+
+    def message_parts_for(msg)
+      return yield(nil, nil, msg) if msg.is_a?(String)
+
+      time = msg[:time].strftime('%H:%M:%S')
+      name = msg[:from].to_s
+      message = msg[:message]
+
+      yield(time, name, message)
     end
 
     def warning(msg)
@@ -45,30 +64,29 @@ module Debug
     end
 
     def chat(msg)
-      words = msg.split(' ')
-      time = words[0..1]
-      name = words[2]
-      message = words[3..words.length]
+      message_parts_for(msg) do |time, name, message|
+        colored_time = (time.to_s + ' ').colorize(:light_magenta)
+        colored_name = (name + ' ').colorize(:cyan)
 
-      print (time.join(' ') + ' ').colorize(:light_magenta)
-      print (name + ' ').colorize(:cyan)
-      print message.join(' ') + "\n"
+        print colored_time
+        print colored_name
+        print message + "\n"
+      end
     end
 
     def whisper(msg)
-      words = msg.split(' ')
-      time = words[0..1]
-      name = words[2]
-      message = words[3..words.length]
+      message_parts_for(msg) do |time, name, message|
+        colored_time = (time.to_s + ' ').colorize(:magenta)
+        colored_name = (name + ' ').colorize(:light_black)
 
-      print (time.join(' ') + ' ').colorize(:magenta)
-      print (name + ' ').colorize(:light_black)
-      print message.join(' ') + "\n"
+        print colored_time
+        print colored_name
+        print message + "\n"
+      end
     end
   end
 end
 
-
-MeshChat.start(
+Meshchat.start(
   display: Debug::CLIOutput, # your class implementing `Display::Base`
 )
