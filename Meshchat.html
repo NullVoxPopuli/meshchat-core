@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Meshchat
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Meshchat.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (M)</a> &raquo;
+    
+    
+    <span class="title">Meshchat</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Meshchat
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1">ActiveSupport::Autoload</dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/meshchat/ui.rb<span class="defines">,<br />
+  lib/meshchat.rb,<br /> lib/meshchat/debug.rb,<br /> lib/meshchat/ui/cli.rb,<br /> lib/meshchat/version.rb,<br /> lib/meshchat/network.rb,<br /> lib/meshchat/encryption.rb,<br /> lib/meshchat/ui/command.rb,<br /> lib/meshchat/ui/display.rb,<br /> lib/meshchat/models/node.rb,<br /> lib/meshchat/ui/notifier.rb,<br /> lib/meshchat/ui/cli/base.rb,<br /> lib/meshchat/configuration.rb,<br /> lib/meshchat/network/local.rb,<br /> lib/meshchat/ui/command/irb.rb,<br /> lib/meshchat/network/remote.rb,<br /> lib/meshchat/network/errors.rb,<br /> lib/meshchat/ui/display/base.rb,<br /> lib/meshchat/ui/command/exit.rb,<br /> lib/meshchat/ui/command/chat.rb,<br /> lib/meshchat/ui/command/help.rb,<br /> lib/meshchat/ui/command/base.rb,<br /> lib/meshchat/ui/command/ping.rb,<br /> lib/meshchat/ui/command/bind.rb,<br /> lib/meshchat/network/message.rb,<br /> lib/meshchat/ui/command/emote.rb,<br /> lib/meshchat/ui/command/share.rb,<br /> lib/meshchat/ui/notifier/base.rb,<br /> lib/meshchat/network/incoming.rb,<br /> lib/meshchat/ui/command/config.rb,<br /> lib/meshchat/ui/command/online.rb,<br /> lib/meshchat/ui/command/import.rb,<br /> lib/meshchat/ui/command/server.rb,<br /> lib/meshchat/encryption/aes_rsa.rb,<br /> lib/meshchat/ui/display/manager.rb,<br /> lib/meshchat/ui/command/offline.rb,<br /> lib/meshchat/ui/command/whisper.rb,<br /> lib/meshchat/network/dispatcher.rb,<br /> lib/meshchat/ui/command/ping_all.rb,<br /> lib/meshchat/ui/command/identity.rb,<br /> lib/meshchat/ui/cli/input_factory.rb,<br /> lib/meshchat/network/remote/relay.rb,<br /> lib/meshchat/network/local/server.rb,<br /> lib/meshchat/network/message/chat.rb,<br /> lib/meshchat/network/message/base.rb,<br /> lib/meshchat/network/message/ping.rb,<br /> lib/meshchat/network/message/emote.rb,<br /> lib/meshchat/configuration/settings.rb,<br /> lib/meshchat/configuration/database.rb,<br /> lib/meshchat/configuration/identity.rb,<br /> lib/meshchat/encryption/passthrough.rb,<br /> lib/meshchat/configuration/hash_file.rb,<br /> lib/meshchat/network/message/whisper.rb,<br /> lib/meshchat/network/message/factory.rb,<br /> lib/meshchat/configuration/app_config.rb,<br /> lib/meshchat/network/local/connection.rb,<br /> lib/meshchat/network/remote/relay_pool.rb,<br /> lib/meshchat/network/remote/connection.rb,<br /> lib/meshchat/network/message/node_list.rb,<br /> lib/meshchat/ui/command/send_disconnect.rb,<br /> lib/meshchat/ui/cli/keyboard_line_input.rb,<br /> lib/meshchat/network/message/ping_reply.rb,<br /> lib/meshchat/network/message/disconnect.rb,<br /> lib/meshchat/network/message/node_list_hash.rb,<br /> lib/meshchat/network/message/node_list_diff.rb,<br /> lib/meshchat/network/incoming/message_decryptor.rb,<br /> lib/meshchat/network/incoming/message_processor.rb,<br /> lib/meshchat/network/incoming/request_processor.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>frozen_string_literal: true</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Meshchat/Configuration.html" title="Meshchat::Configuration (module)">Configuration</a></span>, <span class='object_link'><a href="Meshchat/Debug.html" title="Meshchat::Debug (module)">Debug</a></span>, <span class='object_link'><a href="Meshchat/Encryption.html" title="Meshchat::Encryption (module)">Encryption</a></span>, <span class='object_link'><a href="Meshchat/Network.html" title="Meshchat::Network (module)">Network</a></span>, <span class='object_link'><a href="Meshchat/Ui.html" title="Meshchat::Ui (module)">Ui</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Meshchat/Node.html" title="Meshchat::Node (class)">Node</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.9.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bootstrap_runloop-class_method" title="bootstrap_runloop (class method)">+ (Object) <strong>bootstrap_runloop</strong>(app_config) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#start-class_method" title="start (class method)">+ (Object) <strong>start</strong>(overrides = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="bootstrap_runloop-class_method">
+  
+    + (<tt>Object</tt>) <strong>bootstrap_runloop</strong>(app_config) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/meshchat.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bootstrap_runloop'>bootstrap_runloop</span><span class='lparen'>(</span><span class='id identifier rubyid_app_config'>app_config</span><span class='rparen'>)</span>
+  <span class='comment'># 1. hook up the display / output &#39;device&#39;
+</span>  <span class='comment'>#    - responsible for notifications
+</span>  <span class='comment'>#    - created in Configuration
+</span>  <span class='id identifier rubyid_display'>display</span> <span class='op'>=</span> <span class='const'>Display</span>
+
+  <span class='comment'># 2. create the message dispatcher
+</span>  <span class='comment'>#    - boots the local and relay network connections
+</span>  <span class='comment'>#    - sends the messages out to the network
+</span>  <span class='comment'>#    - tries p2p first, than uses the relays
+</span>  <span class='id identifier rubyid_message_dispatcher'>message_dispatcher</span> <span class='op'>=</span> <span class='const'>Network</span><span class='op'>::</span><span class='const'>Dispatcher</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+  <span class='comment'># 3. hook up the keyboard / input &#39;device&#39;
+</span>  <span class='comment'>#    - tesponsible for parsing input
+</span>  <span class='id identifier rubyid_input_receiver'>input_receiver</span> <span class='op'>=</span> <span class='const'>Ui</span><span class='op'>::</span><span class='const'>CLI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_message_dispatcher'>message_dispatcher</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_message_dispatcher'>message_dispatcher</span><span class='period'>.</span><span class='id identifier rubyid__message_factory'>_message_factory</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_display'>display</span><span class='rparen'>)</span>
+
+  <span class='comment'># by default the app_config[:input] is
+</span>  <span class='comment'># Meshchat::Cli::KeyboardLineInput
+</span>  <span class='const'>EM</span><span class='period'>.</span><span class='id identifier rubyid_open_keyboard'>open_keyboard</span><span class='lparen'>(</span><span class='id identifier rubyid_app_config'>app_config</span><span class='lbracket'>[</span><span class='symbol'>:input</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_input_receiver'>input_receiver</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="start-class_method">
+  
+    + (<tt>Object</tt>) <strong>start</strong>(overrides = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>overrides</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>overrides</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">on_display_start</span>
+          <span class="type">(<tt>Proc</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>what to do upon start of the display manager</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">display</span>
+          <span class="type">(<tt>class</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>the display ui to use inherited from Display::Base</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/meshchat.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_overrides'>overrides</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_app_config'>app_config</span> <span class='op'>=</span> <span class='const'>Configuration</span><span class='op'>::</span><span class='const'>AppConfig</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_overrides'>overrides</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_app_config'>app_config</span><span class='period'>.</span><span class='id identifier rubyid_validate'>validate</span>
+
+  <span class='comment'># if everything is configured correctly, boot the app
+</span>  <span class='comment'># this handles all of the asyncronous stuff
+</span>  <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_bootstrap_runloop'>bootstrap_runloop</span><span class='lparen'>(</span><span class='id identifier rubyid_app_config'>app_config</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue May  3 22:01:34 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.3.0).
+</div>
+
+  </body>
+</html>
