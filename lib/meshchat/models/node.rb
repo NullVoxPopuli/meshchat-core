@@ -6,18 +6,17 @@ module Meshchat
     DOMAIN_WITH_PORT = /(https?:\/\/)?([\da-z\.-]+)\.?([a-z\.]{2,6})([\/\w \.-]*)*[^\/](:\d*)?/
 
     validates :alias_name,
-      :location,
       :public_key, presence: true
 
     validates :uid, presence: true, uniqueness: true
 
     # ipv4 with port
-    validates_format_of :location, with: lambda { |e|
-      location = e.location || ''
-      location.include?('//') || location.include?('localhost') ?
-        DOMAIN_WITH_PORT :
-        IPV4_WITH_PORT
-    }
+    # validates_format_of :location, with: lambda { |e|
+    #   location = e.location || ''
+    #   location.include?('//') || location.include?('localhost') ?
+    #     DOMAIN_WITH_PORT :
+    #     IPV4_WITH_PORT
+    # }
 
     scope :on_local_network, -> { where(on_local_network: true) }
     scope :on_relay, -> { where(on_relay: true) }
