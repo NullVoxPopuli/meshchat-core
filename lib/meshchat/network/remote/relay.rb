@@ -10,20 +10,20 @@ module Meshchat
         CHANNEL = 'MeshRelayChannel'
 
         attr_reader :_url, :_client, :_request_processor
-        attr_accessible :_connected
+        attr_accessor :_connected
         delegate :perform, to: :_client
 
-        def initialize(url, message_dispatcher)
+        def initialize(url, message_dispatcher, connected: nil)
           @_url = url
           @_request_processor = Incoming::RequestProcessor.new(
             network: NETWORK_RELAY,
             location: url,
             message_dispatcher: message_dispatcher)
 
-          setup
+          setup(connected: connected)
         end
 
-        def setup
+        def setup(connected: nil)
           path = "#{_url}?uid=#{APP_CONFIG.user['uid']}"
           @_client = ActionCableClient.new(path, CHANNEL)
 
@@ -35,6 +35,10 @@ module Meshchat
           # If there are errors, report them!
           _client.errored do |message|
             process_error(message)
+          end
+
+          _client.subscribed do
+            connected.call if connected
           end
 
           # forward the encrypted messages to our RequestProcessor
