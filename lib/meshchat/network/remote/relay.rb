@@ -10,6 +10,7 @@ module Meshchat
         CHANNEL = 'MeshRelayChannel'
 
         attr_reader :_url, :_client, :_request_processor
+        attr_accessible :_connected
         delegate :perform, to: :_client
 
         def initialize(url, message_dispatcher)
@@ -27,7 +28,9 @@ module Meshchat
           @_client = ActionCableClient.new(path, CHANNEL)
 
           # don't output anything upon connecting
-          _client.connected {}
+          _client.connected {
+            self._connected = true
+          }
 
           # If there are errors, report them!
           _client.errored do |message|
@@ -40,7 +43,15 @@ module Meshchat
             process_message(message)
           end
 
+          _client.disconnected do
+            self._connected = false
+          end
+
           _client
+        end
+
+        def connected?
+          _connected
         end
 
         # example messages:
