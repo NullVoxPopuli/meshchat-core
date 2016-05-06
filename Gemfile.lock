@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    meshchat (0.9.0)
+    meshchat (0.10.0)
       action_cable_client (>= 1.2.6)
       activerecord (>= 5.0.0.beta3)
       activesupport (>= 5.0.0.beta3)
