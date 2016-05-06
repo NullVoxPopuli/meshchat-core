@@ -36,6 +36,11 @@ module Meshchat
         dispatch!(node, message)
       end
 
+      def send_to_all(message)
+        nodes = Node.online
+        nodes.each { |node| send_message(node: node, message: message) }
+      end
+
       private
 
       def dispatch!(node, message)
