@@ -18,9 +18,13 @@ module Meshchat
           if message != Node.as_sha512
             Display.debug 'node list hashes do not match'
 
+            node_list = _message_factory.create(
+              NODE_LIST,
+              data: { message: Node.as_json })
+
             _message_dispatcher.send_message(
               uid: payload['sender']['uid'],
-              message: NodeList.new(message: Node.as_json)
+              message: node_list
             )
           else
             Display.debug 'node list hash matches'

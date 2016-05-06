@@ -34,7 +34,17 @@ module Meshchat
         end
 
         def info(msg)
-          print_non_destructively(msg.colorize(:light_black))
+          if msg.is_a?(Hash)
+            message_parts_for(msg) do |time, name, message|
+              colored_time = (time.to_s + ' ').colorize(:magenta)
+              colored_name = (name + ' ').colorize(:light_black)
+              colored_message = message.colorize(:light_black)
+
+              print_non_destructively(colored_time + colored_name + colored_message)
+            end
+          else
+            print_non_destructively(msg.colorize(:light_black))
+          end
         end
 
         def warning(msg)
@@ -51,7 +61,7 @@ module Meshchat
 
         def emote(msg)
           message_parts_for(msg) do |time, name, message|
-            colored_time = (time.to_s + ' ').colorize(:light_black)
+            colored_time = (time.to_s + ' ').colorize(:magenta)
             colored_name = (name + ' ').colorize(:light_black)
             colored_message = message.colorize(:light_black)
 

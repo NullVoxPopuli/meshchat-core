@@ -4,7 +4,7 @@ module Meshchat
     module Message
       class PingReply < Base
         def display
-          'ping successful' if APP_CONFIG.user.debug?
+          super.merge(message: 'successfully responded to your ping')
         end
       end
     end
