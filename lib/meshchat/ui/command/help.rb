@@ -10,7 +10,8 @@ module Meshchat
         def handle
           Meshchat::Ui::Command::COMMAND_MAP.each do |key, klass|
             if klass.respond_to?(:description)
-              Display.info "/#{key}\t\t" + klass.description
+              line = "/%-18s %s" % [key, klass.description ]
+              Display.info line
             end
           end
         end
