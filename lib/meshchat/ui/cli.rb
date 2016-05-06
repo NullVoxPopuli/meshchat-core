@@ -18,33 +18,43 @@ module Meshchat
 
       attr_reader :_message_dispatcher, :_message_factory, :_command_factory
       attr_accessor :_last_input_received_at
+      attr_accessor :_sent_idle_message
 
       def initialize(dispatcher, message_factory, _display)
         @_message_dispatcher = dispatcher
         @_message_factory = message_factory
         @_command_factory = InputFactory.new(dispatcher, message_factory, self)
+        self._sent_idle_message = false
+        self._last_input_received_at = Time.now
 
         # only check for timeout once a minute
         EM.add_periodic_timer(60) { away_timeout }
       end
 
       def away_timeout
-        return if activity_timeout_triggreed?
+        return unless activity_timeout_triggred?
         message = _message_factory.create(Network::Message::EMOTE,
           data: {
             message: 'has become idle'
           })
 
         _message_dispatcher.send_to_all(message)
+        self._sent_idle_message = true
       end
 
-      def activity_timeout_triggreed?
+      def activity_timeout_triggred?
+        return false if _sent_idle_message
         seconds_passed = Time.now - _last_input_received_at
         seconds_passed > AWAY_TIMEOUT
       end
 
-      def create_input(msg)
+      def reset_timeout_timer
         self._last_input_received_at = Time.now
+        self._sent_idle_message = false
+      end
+
+      def create_input(msg)
+        reset_timeout_timer
         handler = _command_factory.create(for_input: msg)
         handler.handle
       rescue => e
