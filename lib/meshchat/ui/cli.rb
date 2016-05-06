@@ -10,6 +10,7 @@ module Meshchat
         autoload :InputFactory
         autoload :Base
         autoload :KeyboardLineInput
+        autoload :ReadlineInput
       end
 
       attr_reader :_message_dispatcher, :_message_factory, :_command_factory

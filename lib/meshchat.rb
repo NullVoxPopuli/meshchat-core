@@ -76,6 +76,8 @@ module Meshchat
 
     # by default the app_config[:input] is
     # Meshchat::Cli::KeyboardLineInput
-    EM.open_keyboard(app_config[:input], input_receiver)
+    # EM.open_keyboard(app_config[:input], input_receiver)
+    input = app_config[:input].new(input_receiver)
+    input.try(:start)
   end
 end

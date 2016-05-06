@@ -7,6 +7,7 @@ module Meshchat
       eager_autoload do
         autoload :Base
         autoload :Manager
+        autoload :ReadlineDisplay
       end
 
       module_function

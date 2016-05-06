@@ -16,10 +16,13 @@ module Meshchat
         @_options = DEFAULTS.merge(options)
         @_options[:user] = Configuration::Settings.new
 
-        locale_path = 'lib/meshchat/locale/'
+        locale_path = 'locale/'
         # I18n.load_path = Dir[locale_path + '*.yml']
+        # puts File.read(locale_path)
+        root_path = File.dirname(__FILE__)
+        full_path = "#{root_path}/../#{locale_path}"
         I18n.backend.store_translations(:en,
-          YAML.load(File.read(locale_path + 'en.yml')))
+          YAML.load(File.read(full_path + 'en.yml')))
 
         Meshchat.const_set(:Notify, options[:notifier])
 
