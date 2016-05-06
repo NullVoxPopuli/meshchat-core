@@ -15,7 +15,7 @@ module Meshchat
         end
 
         def show_myself(message)
-          Display.info message.display
+          Display.emote message.display
         end
       end
     end
