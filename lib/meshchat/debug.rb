@@ -27,17 +27,21 @@ module Meshchat
       Display.debug('SENDING: ' + node.alias_name + ' is not on the local network')
     end
 
+    def subscribed_to_relay
+      Display.debug('Subscribed to relay...')
+    end
+
     def received_message_from_relay(message, relay_url)
       Display.debug('RECEIVING on RELAY: ' + relay_url)
       Display.debug('RECEIVING on RELAY: ')
       Display.debug(message)
     end
 
-    def sending_message_over_relay(node, message, relay_url)
-      Display.debug('SENDING on RELAY: ' + relay_url)
-      Display.debug('SENDING on RELAY: ' + node.as_json.to_json)
-      Display.debug('SENDING on RELAY: ' + message.class.name)
-      Display.debug('SENDING on RELAY: ' + message.inspect)
+    def sending_message_over_relay(node, relay_pool)
+      Display.debug('SENDING on RELAY ---------------------- ')
+      Display.debug('SENDING on RELAY: ' + node.alias_name)
+      Display.debug('SENDING on RELAY: ' + node.uid)
+      Display.debug('SENDING on RELAY: ' + relay_pool._active_relay._url)
     end
 
     def receiving_message(message)
@@ -46,10 +50,14 @@ module Meshchat
       Display.debug('RECEIVING: ' + message.message.to_s)
     end
 
-    def sending_message(message)
-      Display.debug('SENDING: ' + message.type)
-      Display.debug('SENDING: ' + message.sender.to_s)
-      Display.debug('SENDING: ' + message.message.to_s)
+    def message_being_dispatched(node, message)
+      Display.debug('DISPATCHING: ---------------------')
+      Display.debug('DISPATCHING: u - ' + node.uid)
+      Display.debug('DISPATCHING: a - ' + node.alias_name)
+      Display.debug('DISPATCHING: r - ' + node.on_relay.to_s)
+      Display.debug('DISPATCHING: l - ' + node.on_local_network.to_s)
+      Display.debug('DISPATCHING: ' + message.type)
+      Display.debug('DISPATCHING: ' + message.message.to_s)
     end
 
     def person_not_online(node, message, e)

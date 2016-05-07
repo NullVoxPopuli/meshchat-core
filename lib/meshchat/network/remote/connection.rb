@@ -13,6 +13,7 @@ module Meshchat
         end
 
         def send_message(node, encrypted_message)
+          Debug.sending_message_over_relay(node, _relay_pool)
           payload = payload_for(node.uid, encrypted_message)
           _relay_pool.send_payload(payload)
         end

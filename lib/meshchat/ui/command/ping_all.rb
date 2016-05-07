@@ -9,9 +9,7 @@ module Meshchat
 
         def handle
           ping = _message_factory.create(Network::Message::PING)
-          Node.all.each do |n|
-            _message_dispatcher.send_message(node: n, message: ping)
-          end
+          _message_dispatcher.send_to_all(ping, ignore_offline_status: true)
         end
       end
     end

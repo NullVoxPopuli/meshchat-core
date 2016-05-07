@@ -46,7 +46,7 @@ module Meshchat
           # p http.response_header.status
           # p http.response_header
           # p http.response
-          http.callback {}
+          http.callback { Display.debug http.response_header.status }
         end
 
         def payload_for(encrypted_message)

@@ -36,15 +36,15 @@ module Meshchat
         dispatch!(node, message)
       end
 
-      def send_to_all(message)
-        nodes = Node.online
+      def send_to_all(message, ignore_offline_status: false)
+        nodes = ignore_offline_status ? Node.all : Node.online
         nodes.each { |node| send_message(node: node, message: message) }
       end
 
       private
 
       def dispatch!(node, message)
-        Debug.sending_message(message)
+        Debug.message_being_dispatched(node, message)
 
         message = encrypted_message(node, message)
 

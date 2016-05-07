@@ -28,9 +28,7 @@ module Meshchat
           @_client = ActionCableClient.new(path, CHANNEL)
 
           # don't output anything upon connecting
-          _client.connected {
-            self._connected = true
-          }
+          _client.connected { self._connected = true }
 
           # If there are errors, report them!
           _client.errored do |message|
@@ -38,6 +36,7 @@ module Meshchat
           end
 
           _client.subscribed do
+            Debug.subscribed_to_relay
             connected.call if connected
           end
 
@@ -96,11 +95,18 @@ module Meshchat
         def error_message_received(message)
           Display.info message['error']
           if message['status'] == 404
-            # mark the node as offline via relay
-            # TODO: find the intended node.
-            #       if on_local_network is true, send to http_client
-            # Display.info "#{node.alias_name} has ventured offline"
-            # Debug.person_not_online(node, message, e)
+            uid = message['uid']
+            mark_as_offline(uid)
+          end
+        end
+
+        def mark_as_offline(uid)
+          node = Node.find_by_uid(uid)
+          if node
+            Display.info "#{node.alias_name} has ventured offline"
+            node.update(on_relay: false)
+          else
+            Display.info 'someone directly sent you a fake offline message'
           end
         end
       end
