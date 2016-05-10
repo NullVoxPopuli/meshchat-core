@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.3.0'
 
   s.add_runtime_dependency 'sqlite3',                 '>= 1.3.11'
-  s.add_runtime_dependency 'activerecord',            '>= 5.0.0.beta4'
-  s.add_runtime_dependency 'activesupport',           '>= 5.0.0.beta4'
+  s.add_runtime_dependency 'activerecord',            '>= 5.0.0.rc1'
+  s.add_runtime_dependency 'activesupport',           '>= 5.0.0.rc1'
   s.add_runtime_dependency 'colorize',                '>= 0.7.7'
   s.add_runtime_dependency 'awesome_print',           '>= 1.6.1'
   s.add_runtime_dependency 'eventmachine',            '>= 1.2.0.1'
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'ripl-readline-em'
   s.add_runtime_dependency 'action_cable_client',     '>= 1.2.6'
   s.add_runtime_dependency 'i18n',                    '>= 0.7.0'
+  s.add_runtime_dependency 'libnotify',               '>= 0.9.1'
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'yard'

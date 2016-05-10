@@ -1,8 +1,8 @@
 require 'meshchat'
 
 Meshchat.start(
-  name: 'Spiced Rumby',
-  version: '0.10.1',
+  client_name: 'Spiced Rumby',
   display: Meshchat::Ui::Display::ReadlineDisplay, # your class implementing `Display::Base`
-  input: Meshchat::Ui::CLI::ReadlineInput
+  input: Meshchat::Ui::CLI::ReadlineInput,
+  notifier: Meshchat::Ui::Notifier::LibNotify
 )

@@ -4,6 +4,7 @@ module Meshchat
     module Notifier
       extend ActiveSupport::Autoload
       autoload :Base
+      autoload :LibNotify
     end
   end
 end

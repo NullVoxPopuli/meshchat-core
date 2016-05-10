@@ -8,6 +8,7 @@ require 'colorize'
 require 'io/console'
 require 'readline'
 require 'logger'
+require 'libnotify'
 
 # required gems
 require 'awesome_print'

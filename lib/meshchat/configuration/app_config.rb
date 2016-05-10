@@ -24,7 +24,10 @@ module Meshchat
         I18n.backend.store_translations(:en,
           YAML.load(File.read(full_path + 'en.yml')))
 
-        Meshchat.const_set(:Notify, options[:notifier])
+        if notifier = options[:notifier]
+          notifier_instance = notifier.new
+          Meshchat.const_set(:Notify, notifier_instance)
+        end
 
         # The display has to be created right away so that
         # we can start outputting to it
