@@ -15,7 +15,7 @@ module Meshchat
           # input, X, Y, +Z, Z
           _, num, size, _, modifier = REGEX.match(input).to_a.map(&:to_i)
 
-          result = Array.new(num) { rand(size + 1) }.inject(:+) + modifier
+          result = Array.new(num) { rand(size) + 1 }.inject(:+) + modifier
           @_input = "rolls #{num}d#{size}#{modifier != 0 ? "+#{modifier}" : ''} and gets #{result}"
         end
 
