@@ -11,6 +11,7 @@ module Meshchat
         TYPES = {
           CHAT           => Chat,
           EMOTE          => Emote,
+          ROLL           => Emote,
           WHISPER        => Whisper,
           DISCONNECT     => Disconnect,
           PING           => Ping,
@@ -42,7 +43,7 @@ module Meshchat
 
           parameters = parameters_for(data)
           klass = TYPES[type]
-          raise Errors::MessageTypeNotRecognized unless klass
+          raise Errors::MessageTypeNotRecognized, type + ' not found' unless klass
           klass.new(parameters)
         end
 

@@ -5,13 +5,20 @@ module Meshchat
       extend ActiveSupport::Autoload
 
       # @see https://github.com/neuravion/mesh-chat/blob/master/message-types.md
+      # chat types
       CHAT           = 'chat'
       EMOTE          = 'emote'
+      WHISPER        = 'whisper'
+
+      # fake type, actually renders as an emote
+      ROLL           = 'roll'
+
+      # status types
       PING           = 'ping'
       PING_REPLY     = 'pingreply'
-      WHISPER        = 'whisper'
       DISCONNECT     = 'disconnect'
 
+      # node list sync types
       NODE_LIST      = 'nodelist'
       NODE_LIST_HASH = 'nodelisthash'
       NODE_LIST_DIFF = 'nodelistdiff'

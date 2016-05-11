@@ -23,6 +23,7 @@ module Meshchat
         autoload :Share
         autoload :Import
         autoload :Emote
+        autoload :Roll
       end
 
       COMMAND_MAP = {
@@ -44,6 +45,7 @@ module Meshchat
         Base::BIND            => Bind,
         Base::SEND_DISCONNECT => SendDisconnect,
         Base::EMOTE           => Emote,
+        Base::ROLL            => Roll,
         Base::CHAT            => Chat
       }.freeze
     end

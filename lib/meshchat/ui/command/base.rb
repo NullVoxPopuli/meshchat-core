@@ -29,6 +29,7 @@ module Meshchat
         BIND = 'bind'
         SEND_DISCONNECT = 'senddisconnect'
         EMOTE = 'me'
+        ROLL = 'roll'
 
         attr_reader :_input, :_message_dispatcher
         attr_reader :_message_factory, :_input_factory
