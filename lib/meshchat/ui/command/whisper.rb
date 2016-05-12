@@ -53,6 +53,7 @@ module Meshchat
           # time a line is received
           #
           # TODO: this feels gross, is there a better way?
+          # TODO: move this callback from ReadlineInput to the Input Base
           CLI::ReadlineInput.input_handler.callback_on_next_tick = lambda do |line|
             answer = line.to_i
             node = nodes[answer]
