@@ -8,6 +8,7 @@ module Meshchat
         end
 
         def handle
+          return unless _input_factory._whisper_lock_target
           Display.info 'whisper lock disabled'
           _input_factory.clear_whisper_lock
         end
