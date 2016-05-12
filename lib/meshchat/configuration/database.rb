@@ -31,6 +31,8 @@ module Meshchat
 
                 table.column :on_local_network, :boolean, default: true, null: false
                 table.column :on_relay, :boolean, default: false, null: false
+
+                table.timestamps
               end
             end
           end

@@ -16,7 +16,18 @@ module Meshchat
 
           def initialize
             Readline.callback_handler_install('> ') do |line|
-              EventMachine.next_tick { @input_receiver.create_input(line) }
+              EventMachine.next_tick { handle_input(line) }
+            end
+          end
+
+          def handle_input(line)
+            if @callback
+              # call and clear, so we can resume normal
+              # input handling
+              @callback.call(line)
+              @callback = nil
+            else
+              @input_receiver.create_input(line)
             end
           end
 
@@ -32,6 +43,10 @@ module Meshchat
             @input_receiver = receiver
           end
 
+          def callback_on_next_tick=(callback)
+            @callback = callback
+          end
+
         end
 
         class << self
@@ -39,6 +54,14 @@ module Meshchat
             commands = Meshchat::Ui::Command::COMMAND_MAP.map { |k, _v| "/#{k}" }
             aliases = Meshchat::Node.all.map { |n| "#{n.alias_name}" }
             commands + aliases
+          end
+
+          def input_handler
+            @input_handler
+          end
+
+          def input_handler=(handler)
+            @input_handler = handler
           end
         end
 
@@ -48,11 +71,12 @@ module Meshchat
           conn = EventMachine.watch $stdin, Handler
           conn.notify_readable = true
           conn.input_receiver = _input_receiver
-
+          self.class.input_handler = conn
           # update auto completion
           completion = proc { |s| self.class.autocompletes.grep(/^#{Regexp.escape(s)}/) }
           Readline.completion_proc = completion
         end
+
 
         # def initialize(*args)
         #   super(args)
