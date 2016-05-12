@@ -7,13 +7,17 @@ module Meshchat
       eager_autoload do
         autoload :Base
         autoload :Chat
+        autoload :Emote
+        autoload :Whisper
+        autoload :WhisperLock
+        autoload :AllChatLock
+
         autoload :Identity
         autoload :Irb
         autoload :Config
         autoload :Ping
         autoload :PingAll
         autoload :Server
-        autoload :Whisper
         autoload :Exit
         autoload :SendDisconnect
         autoload :Help
@@ -22,8 +26,10 @@ module Meshchat
         autoload :Offline
         autoload :Share
         autoload :Import
-        autoload :Emote
         autoload :Roll
+
+        # Utility
+        autoload :NodeFinder
       end
 
       COMMAND_MAP = {
@@ -46,7 +52,9 @@ module Meshchat
         Base::SEND_DISCONNECT => SendDisconnect,
         Base::EMOTE           => Emote,
         Base::ROLL            => Roll,
-        Base::CHAT            => Chat
+        Base::CHAT            => Chat,
+        Base::WHISPER_LOCK    => WhisperLock,
+        Base::ALL_CHAT_LOCK   => AllChatLock
       }.freeze
     end
   end

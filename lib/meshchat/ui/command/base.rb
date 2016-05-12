@@ -30,6 +30,8 @@ module Meshchat
         SEND_DISCONNECT = 'senddisconnect'
         EMOTE = 'me'
         ROLL = 'roll'
+        WHISPER_LOCK = 'wl'
+        ALL_CHAT_LOCK = 'all'
 
         attr_reader :_input, :_message_dispatcher
         attr_reader :_message_factory, :_input_factory
@@ -47,7 +49,7 @@ module Meshchat
           if klass
             _input_factory.create(for_input: _input, with_class: klass).handle
           else
-            Display.alert 'not implemented...'
+            Display.alert "#{command} not implemented..."
           end
         end
 

@@ -22,6 +22,10 @@ module Meshchat
 
           @_to = to
         end
+
+        def display
+          super.merge(to: _to)
+        end
       end
     end
   end

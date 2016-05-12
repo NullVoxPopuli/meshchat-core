@@ -7,6 +7,7 @@ module Meshchat
         COMMAND = '/'
 
         attr_accessor :_message_dispatcher, :_message_factory, :_cli
+        attr_accessor :_whisper_lock_target
 
         def initialize(message_dispatcher, message_factory, cli)
           self._message_dispatcher = message_dispatcher
@@ -32,6 +33,14 @@ module Meshchat
           klass.new(input, _message_dispatcher, _message_factory, self)
         end
 
+        def clear_whisper_lock
+          self._whisper_lock_target = nil
+        end
+
+        def whisper_lock_to(node)
+          self._whisper_lock_target = node
+        end
+
         def create_for_input(input)
           klass =
             if is_command?(input)
@@ -39,10 +48,19 @@ module Meshchat
             elsif is_whisper?(input)
               Command::Whisper
             else
+              return whisper_for_locked_target(input) if _whisper_lock_target
               Command::Chat
             end
 
           create_with_class(input, klass)
+        end
+
+        def whisper_for_locked_target(input)
+          command = Command::Whisper.new(
+            input, _message_dispatcher, _message_factory, self)
+
+          command._target_node = _whisper_lock_target
+          command
         end
       end
     end

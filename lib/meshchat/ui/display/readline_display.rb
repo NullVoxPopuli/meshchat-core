@@ -35,7 +35,7 @@ module Meshchat
 
         def info(msg)
           if msg.is_a?(Hash)
-            message_parts_for(msg) do |time, name, message|
+            message_parts_for(msg) do |time, name, message, _|
               colored_time = (time.to_s + ' ').colorize(:magenta)
               colored_name = (name + ' ').colorize(:light_black)
               colored_message = message.colorize(:light_black)
@@ -60,7 +60,7 @@ module Meshchat
         end
 
         def emote(msg)
-          message_parts_for(msg) do |time, name, message|
+          message_parts_for(msg) do |time, name, message, _|
             colored_time = (time.to_s + ' ').colorize(:magenta)
             colored_name = (name + ' ').colorize(:light_black)
             colored_message = message.colorize(:light_black)
@@ -70,7 +70,7 @@ module Meshchat
         end
 
         def chat(msg)
-          message_parts_for(msg) do |time, name, message|
+          message_parts_for(msg) do |time, name, message, _|
             colored_time = (time.to_s + ' ').colorize(:light_magenta)
             colored_name = (name + ' ').colorize(:cyan)
 
@@ -79,12 +79,14 @@ module Meshchat
         end
 
         def whisper(msg)
-          message_parts_for(msg) do |time, name, message|
+          message_parts_for(msg) do |time, name, message, to|
             colored_time = (time.to_s + ' ').colorize(:magenta).bold
-            colored_name = (name + ' ').colorize(:light_black).bold
+            colored_name = name.colorize(:light_black).bold
             colored_message = message.colorize(:blue).bold
+            colored_to = to.colorize(:blue).bold
 
-            print_non_destructively(colored_time + colored_name + colored_message)
+            names = "#{colored_name}->#{to} "
+            print_non_destructively(colored_time + names + colored_message)
           end
         end
 
@@ -94,8 +96,9 @@ module Meshchat
           time = msg[:time].strftime('%H:%M:%S')
           name = msg[:from].to_s
           message = msg[:message]
+          to = msg[:to]
 
-          yield(time, name, message)
+          yield(time, name, message, to)
         end
       end
     end
