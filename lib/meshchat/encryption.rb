@@ -7,6 +7,7 @@ module Meshchat
     extend ActiveSupport::Autoload
 
     autoload :AES_RSA
+    autoload :NaCl
     autoload :Passthrough
 
     module_function

@@ -5,4 +5,4 @@ source 'https://rubygems.org'
 # gem 'ncursesw', github: 'sup-heliotrope/ncursesw-ruby'
 gemspec
 
-gem 'em-websocket-client', github: 'mwylde/em-websocket-client'
+# gem 'em-websocket-client', github: 'mwylde/em-websocket-client'
