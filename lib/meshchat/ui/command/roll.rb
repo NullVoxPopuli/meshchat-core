@@ -3,7 +3,7 @@ module Meshchat
   module Ui
     module Command
       class Roll < Command::Chat
-        REGEX = /(\d+)d(\d+)(([%\*+-\^\/])(\d+))?/
+        REGEX = /(\d+)d(\d+)(([+-])(\d+))?/
 
         def self.description
           'rolls a die in the XdY+Z format'
@@ -11,12 +11,10 @@ module Meshchat
 
         def initialize(input, message_dispatcher, message_factory, input_factory)
           super
-          Display.debug input
           # input, X, Y, +Z, Z
-          _, num, size, modifier, operator, number = REGEX.match(input).to_a
+          _, num, size, modifier, _operator, number = REGEX.match(input).to_a
 
-          result = Array.new(num.to_i) { rand(size.to_i) + 1 }.inject(:+)
-          result = result.send(operator.to_sym, number.to_i) if modifier
+          result = Array.new(num.to_i) { rand(size.to_i) + 1 }.inject(:+) + modifier.to_i
           @_input = "rolls #{num}d#{size}#{modifier != 0 ? modifier : ''} and gets #{result}"
         end
 

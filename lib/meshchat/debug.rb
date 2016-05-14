@@ -31,6 +31,14 @@ module Meshchat
       Display.debug('Subscribed to relay...')
     end
 
+    def connected_to_relay
+      Display.debug('Connected to relay...')
+    end
+
+    def disconnected_from_relay
+      Display.debug('Disconnected from relay...')
+    end
+
     def received_message_from_relay(message, relay_url)
       Display.debug('RECEIVING on RELAY: ' + relay_url)
       Display.debug('RECEIVING on RELAY: ')

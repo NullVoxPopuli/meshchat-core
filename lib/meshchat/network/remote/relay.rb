@@ -9,26 +9,32 @@ module Meshchat
         # https://github.com/NullVoxPopuli/mesh-relay/blob/master/app/channels/mesh_relay_channel.rb
         CHANNEL = 'MeshRelayChannel'
 
-        attr_reader :_url, :_client, :_request_processor
+        attr_reader :_url, :_client, :_request_processor, :_message_queue
         attr_accessor :_connected
-        delegate :perform, to: :_client
 
-        def initialize(url, message_dispatcher, connected: nil)
+        delegate :perform, to: :_client
+        delegate :subscribed?, to: :_client
+
+        def initialize(url, message_dispatcher, subscribed_callback = nil)
           @_url = url
+          @_message_queue = []
           @_request_processor = Incoming::RequestProcessor.new(
             network: NETWORK_RELAY,
             location: url,
             message_dispatcher: message_dispatcher)
 
-          setup(connected: connected)
+          setup(subscribed_callback: subscribed_callback)
         end
 
-        def setup(connected: nil)
+        def setup(subscribed_callback: nil)
           path = "#{_url}?uid=#{APP_CONFIG.user['uid']}"
           @_client = ActionCableClient.new(path, CHANNEL)
 
           # don't output anything upon connecting
-          _client.connected { self._connected = true }
+          _client.connected do
+            Debug.connected_to_relay
+            self._connected = true
+          end
 
           # If there are errors, report them!
           _client.errored do |message|
@@ -37,7 +43,7 @@ module Meshchat
 
           _client.subscribed do
             Debug.subscribed_to_relay
-            connected.call if connected
+            subscribed_callback.call if subscribed_callback
           end
 
           # forward the encrypted messages to our RequestProcessor
@@ -47,10 +53,15 @@ module Meshchat
           end
 
           _client.disconnected do
+            Debug.disconnected_from_relay
             self._connected = false
           end
 
           _client
+        end
+
+        def send_now(payload)
+          _client.perform('chat', payload)
         end
 
         def connected?
