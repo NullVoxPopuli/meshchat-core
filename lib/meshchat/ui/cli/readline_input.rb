@@ -13,7 +13,6 @@ module Meshchat
         end
 
         module Handler
-
           def initialize
             Readline.callback_handler_install('> ') do |line|
               EventMachine.next_tick { handle_input(line) }
@@ -46,23 +45,18 @@ module Meshchat
           def callback_on_next_tick=(callback)
             @callback = callback
           end
-
         end
 
         class << self
           def autocompletes
             commands = Meshchat::Ui::Command::COMMAND_MAP.map { |k, _v| "/#{k}" }
-            aliases = Meshchat::Node.all.map { |n| "#{n.alias_name}" }
+            aliases = Meshchat::Node.all.map { |n| n.alias_name.to_s }
             commands + aliases
           end
 
-          def input_handler
-            @input_handler
-          end
+          attr_reader :input_handler
 
-          def input_handler=(handler)
-            @input_handler = handler
-          end
+          attr_writer :input_handler
         end
 
         def start
@@ -76,7 +70,6 @@ module Meshchat
           completion = proc { |s| self.class.autocompletes.grep(/^#{Regexp.escape(s)}/) }
           Readline.completion_proc = completion
         end
-
 
         # def initialize(*args)
         #   super(args)
@@ -92,7 +85,6 @@ module Meshchat
         #
         #   Readline.readline('> ', true)
         # end
-
       end
     end
   end

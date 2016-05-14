@@ -46,7 +46,7 @@ describe Meshchat::Network::Message::NodeList do
     it 'sendsa  node list hash as confirmation that lists are in sync' do
       expect(message_dispatcher).to receive(:send_message)
       expect(Meshchat::Network::Message::NodeListHash).to receive(:new)
-      msg = klass.new(message_dispatcher: message_dispatcher,  message_factory: message_factory)
+      msg = klass.new(message_dispatcher: message_dispatcher, message_factory: message_factory)
       msg.respond
     end
   end

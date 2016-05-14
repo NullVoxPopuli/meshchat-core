@@ -27,7 +27,8 @@ describe Meshchat::Network::Message::Factory do
             data: {
               message: 'message',
               to: 'target'
-            })
+            }
+          )
 
           expect(m._to).to eq 'target'
         end
@@ -38,7 +39,8 @@ describe Meshchat::Network::Message::Factory do
             data: {
               message: 'message',
               to: 'target'
-            })
+            }
+          )
 
           expect(m.sender_name).to eq Meshchat::APP_CONFIG.user['alias']
         end

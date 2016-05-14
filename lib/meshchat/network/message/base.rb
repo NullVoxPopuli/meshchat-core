@@ -25,7 +25,8 @@ module Meshchat
           sender:             {},
           payload:            {},
           message_dispatcher: nil,
-          message_factory:    nil)
+          message_factory:    nil
+        )
 
           if payload.present?
             @payload = payload.deep_stringify_keys

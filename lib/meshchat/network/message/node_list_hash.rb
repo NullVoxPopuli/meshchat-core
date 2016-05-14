@@ -20,7 +20,8 @@ module Meshchat
 
             node_list = _message_factory.create(
               NODE_LIST,
-              data: { message: Node.as_json })
+              data: { message: Node.as_json }
+            )
 
             _message_dispatcher.send_message(
               uid: payload['sender']['uid'],

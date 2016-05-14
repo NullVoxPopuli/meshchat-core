@@ -11,7 +11,8 @@ module Meshchat
           @_message_processor = MessageProcessor.new(
             network: network,
             message_dispatcher: message_dispatcher,
-            location: location)
+            location: location
+          )
         end
 
         # @param [String] request_body - the encrypted message as a json string

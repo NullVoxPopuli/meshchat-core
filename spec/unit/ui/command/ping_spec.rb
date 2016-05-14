@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Meshchat::Ui::Command::Ping do
   let(:klass) { Meshchat::Ui::Command::Ping }
   let(:message_dispatcher) { Meshchat::Network::Dispatcher.new }
-  let(:message_factory){ message_dispatcher._message_factory }
+  let(:message_factory) { message_dispatcher._message_factory }
 
   before(:each) do
     mock_settings_objects

@@ -19,7 +19,8 @@ module Meshchat
           @_message_dispatcher = message_dispatcher
           @_request_processor = Incoming::RequestProcessor.new(
             network: NETWORK_LOCAL,
-            message_dispatcher: message_dispatcher)
+            message_dispatcher: message_dispatcher
+          )
         end
 
         def process_http_request

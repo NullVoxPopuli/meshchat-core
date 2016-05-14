@@ -57,7 +57,8 @@ module Meshchat
 
         def whisper_for_locked_target(input)
           command = Command::Whisper.new(
-            input, _message_dispatcher, _message_factory, self)
+            input, _message_dispatcher, _message_factory, self
+          )
 
           command._target_node = _whisper_lock_target
           command

@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 RSpec::Core::Example.class_eval do
-  alias ignorant_run run
+  alias_method :ignorant_run, :run
 
   def run(example_group_instance, reporter)
     result = false

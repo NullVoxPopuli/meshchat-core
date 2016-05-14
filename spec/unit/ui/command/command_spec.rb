@@ -7,7 +7,7 @@ describe Meshchat::Ui::Command::Base do
   describe '#handle' do
     it 'is not implemented' do
       i = klass.new('/blegh', nil, nil, nil)
-      expect(i.handle).to eq 'not implemented...'
+      expect(i.handle).to eq 'blegh not implemented...'
     end
 
     it 'is implemented' do

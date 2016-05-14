@@ -31,7 +31,8 @@ module Meshchat
             data: {
               message: message,
               to: target
-            })
+            }
+          )
 
           Display.whisper m.display
 

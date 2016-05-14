@@ -11,7 +11,6 @@ describe Meshchat::Network::Message::NodeListHash do
     allow(message_dispatcher._local_client).to receive(:start_server)
   end
 
-
   context 'instantiation' do
     it 'sets a default payload' do
       msg = klass.new

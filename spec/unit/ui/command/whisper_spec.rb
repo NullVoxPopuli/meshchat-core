@@ -41,7 +41,7 @@ describe Meshchat::Ui::Command::Whisper do
     context 'no target' do
       it 'alerts the user' do
         c = klass.new('@target something', nil, nil, nil)
-        expect(c.handle).to eq 'node for target not found or is not online'
+        expect(c.handle).to eq 'No node by: target'
       end
     end
 

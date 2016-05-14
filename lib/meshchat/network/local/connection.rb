@@ -39,7 +39,8 @@ module Meshchat
             head: {
               'Accept' => 'application/json',
               'Content-Type' => 'application/json'
-            })
+            }
+          )
 
           http.errback &error_callback
           # example things available in the callback

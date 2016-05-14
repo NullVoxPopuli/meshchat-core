@@ -62,7 +62,8 @@ describe Meshchat::Node do
         alias_name: 'alias',
         location_on_network: '1.1.1.1:8080',
         uid: '1',
-        public_key: '123')
+        public_key: '123'
+      )
 
       expect(m == hasherized_json).to be_truthy
     end
@@ -74,7 +75,8 @@ describe Meshchat::Node do
         alias_name: 'alias',
         location_on_network: '1.1.1.1:8080',
         uid: '1',
-        public_key: '123')
+        public_key: '123'
+      )
 
       expected = {
         'alias' => 'alias',

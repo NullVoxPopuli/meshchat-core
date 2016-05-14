@@ -73,7 +73,8 @@ module Meshchat
     input_receiver = Ui::CLI.new(
       message_dispatcher,
       message_dispatcher._message_factory,
-      display)
+      display
+    )
 
     # by default the app_config[:input] is
     # Meshchat::Cli::KeyboardLineInput

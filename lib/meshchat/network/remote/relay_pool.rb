@@ -19,6 +19,8 @@ module Meshchat
           @_message_queue = []
 
           find_initial_relay if @_known_relays.present?
+
+          EM.add_periodic_timer(5) { ensure_relay }
         end
 
         # TODO: add logic for just selecting the first available relay.
@@ -27,10 +29,10 @@ module Meshchat
         def find_initial_relay
           url = _known_relays.first
           self._waiting_for_subscription = true
-          @_active_relay = Relay.new(url, _message_dispatcher, ->{
+          @_active_relay = Relay.new(url, _message_dispatcher, lambda do
             self._waiting_for_subscription = false
             deplete_queue
-          })
+          end)
         end
 
         # @param [Hash] payload - the message payload
@@ -43,7 +45,7 @@ module Meshchat
         end
 
         def deplete_queue
-          while _message_queue.size > 0
+          until _message_queue.empty?
             if _active_relay.subscribed?
               payload = _message_queue.pop
               _active_relay.send_now(payload)
@@ -51,7 +53,7 @@ module Meshchat
           end
         end
 
-        def ensure_connection(&block)
+        def ensure_connection
           if _active_relay.connected? && _active_relay.subscribed?
             yield
           else
@@ -63,7 +65,8 @@ module Meshchat
 
         def ensure_relay
           return if _waiting_for_subscription
-          return unless _active_relay.connected?
+          return if _active_relay.subscribed?
+          return if _active_relay.connected?
 
           # clear the previous node
           _active_relay = nil

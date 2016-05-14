@@ -48,11 +48,13 @@ module Meshchat
 
           we_only_have_message = _message_factory.create(
             NODE_LIST_DIFF,
-            data: { message: we_only_have })
+            data: { message: we_only_have }
+          )
 
           they_only_have_message = _message_factory.create(
             NODE_LIST_DIFF,
-            data: { message: they_only_have })
+            data: { message: they_only_have }
+          )
 
           # give the sender our list
           _message_dispatcher.send_message(
@@ -66,7 +68,8 @@ module Meshchat
           Node.online.each do |node|
             _message_dispatcher.send_message(
               node: node,
-              message: they_only_have_message)
+              message: they_only_have_message
+            )
           end
         end
       end

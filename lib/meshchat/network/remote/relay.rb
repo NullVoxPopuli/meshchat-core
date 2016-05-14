@@ -21,7 +21,8 @@ module Meshchat
           @_request_processor = Incoming::RequestProcessor.new(
             network: NETWORK_RELAY,
             location: url,
-            message_dispatcher: message_dispatcher)
+            message_dispatcher: message_dispatcher
+          )
 
           setup(subscribed_callback: subscribed_callback)
         end

@@ -11,7 +11,8 @@ module Meshchat
           payload:            {},
           to:                 '',
           message_dispatcher: nil,
-          message_factory:    nil)
+          message_factory:    nil
+        )
 
           super(
             message:            message,
