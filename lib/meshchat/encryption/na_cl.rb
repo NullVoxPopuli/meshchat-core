@@ -25,8 +25,6 @@ module Meshchat
       # @param [String] for_public_key - the public key of the intended recipient
       # @param [String] with_private_key - (usually) our private key
       def encrypt(msg, for_public_key, with_private_key = nil)
-        with_private_key ||= Settings.user[:nacl_private_key]
-
         # encrypt using the box. The nonce is handled for us
         box = RbNaCl::SimpleBox.from_keypair(for_public_key, with_private_key)
         encrypted = box.encrypt(msg)
@@ -36,8 +34,6 @@ module Meshchat
       # @param [String] from_public_key - the public key of the intended recipient
       # @param [String] with_private_key - (usually) our private key
       def decrypt(msg, from_public_key, with_private_key = nil)
-        with_private_key ||= Settings.user[:nacl_private_key]
-
         # decrypt using the box. The nonce is handled for us
         box = RbNaCl::SimpleBox.from_keypair(from_public_key, with_private_key)
         box.decrypt(msg)
