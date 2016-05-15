@@ -19,7 +19,7 @@ module Meshchat
       # Output message format will look like the following:
       #
       #  {RSA Encrypted AES Key}{RSA Encrypted IV}{AES Encrypted Message}
-      def encrypt(msg, public_key, _)
+      def encrypt(msg, public_key, _ = nil)
         # 1
         cipher = OpenSSL::Cipher::AES256.new(AES_MODE)
         cipher.encrypt
@@ -60,6 +60,15 @@ module Meshchat
         decipher.iv = aes_iv
 
         decipher.update(aes_encrypted_message) + decipher.final
+      end
+
+      # Generates Random Keys
+      def generate_keys
+        key_pair = OpenSSL::PKey::RSA.new(2048)
+        public_key = key_pair.public_key.to_pem
+        private_key = key_pair.to_pem
+
+        [public_key, private_key]
       end
     end
   end

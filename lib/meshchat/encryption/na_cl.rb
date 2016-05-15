@@ -38,6 +38,14 @@ module Meshchat
         box = RbNaCl::SimpleBox.from_keypair(from_public_key, with_private_key)
         box.decrypt(msg)
       end
+
+      # Generates Random Keys
+      def generate_keys
+        private_key = RbNaCl::PrivateKey.generate
+        public_key = private_key.public_key
+
+        [public_key, private_key]
+      end
     end
   end
 end

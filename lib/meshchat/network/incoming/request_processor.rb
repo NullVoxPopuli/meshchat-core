@@ -17,13 +17,13 @@ module Meshchat
 
         # @param [String] request_body - the encrypted message as a json string
         def process(request_body)
-          encoded_message = parse_content(request_body)
-          _message_processor.process(encoded_message)
+          encoded_message, uid = parse_content(request_body)
+          _message_processor.process(encoded_message, uid)
         end
 
         def parse_content(content)
           content = JSON.parse(content) if content.is_a?(String)
-          content['message']
+          [content['message'], content['uid']]
         end
       end
     end

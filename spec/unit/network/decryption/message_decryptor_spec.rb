@@ -26,7 +26,7 @@ describe Meshchat::Network::Incoming::MessageDecryptor do
       }'
       json = Base64.encode64(json)
       factory = message_dispatcher._message_factory
-      s = klass.new(json, factory)
+      s = klass.new(json, factory, nil)
       s.send(:process_json)
       expect(s._message.display[:from]).to include('nvp')
       expect(s._message.display[:message]).to include('yo')

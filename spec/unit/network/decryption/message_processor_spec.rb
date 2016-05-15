@@ -13,9 +13,9 @@ describe Meshchat::Network::Incoming::MessageProcessor do
 
   context 'process' do
     before(:each) do
-      key_pair = OpenSSL::PKey::RSA.new(2048)
-      @public_key = key_pair.public_key.export
-      @private_key = key_pair.export
+      allow(Meshchat::Encryption).to receive(:current_encryptor) { Meshchat::Encryption::AES_RSA }
+
+      @public_key, @private_key = Meshchat::Encryption.current_encryptor.generate_keys
 
       @node_me = Meshchat::Node.new(
         alias_name: 'me',
@@ -24,11 +24,8 @@ describe Meshchat::Network::Incoming::MessageProcessor do
         public_key: @public_key
       )
 
-      key_pair = OpenSSL::PKey::RSA.new(2048)
-      @public_key1 = key_pair.public_key.export
-      @private_key1 = key_pair.export
+      @public_key1, @private_key1 = Meshchat::Encryption.current_encryptor.generate_keys
 
-      allow(Meshchat::Encryption).to receive(:current_encryptor) { Meshchat::Encryption::AES_RSA }
     end
     context 'throws exceptions' do
       context 'not authorized' do
@@ -38,7 +35,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
           raw = message.encrypt_for(@node_me)
 
           expect do
-            message_processor.process(raw)
+            message_processor.process(raw, @node_me.uid)
           end.to raise_error Meshchat::Network::Errors::NotAuthorized
         end
       end
@@ -50,7 +47,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
           raw = message.encrypt_for(@node_me)
 
           expect do
-            message_processor.process(raw)
+            message_processor.process(raw, @node_me.uid)
           end.to raise_error Meshchat::Network::Errors::Forbidden
         end
       end
@@ -63,7 +60,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
           raw = message.encrypt_for(@node_me)
 
           expect do
-            message_processor.process(raw)
+            message_processor.process(raw, @node_me.uid)
           end.to raise_error Meshchat::Network::Errors::MessageTypeNotRecognized
         end
       end

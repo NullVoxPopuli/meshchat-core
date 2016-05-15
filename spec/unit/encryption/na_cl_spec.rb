@@ -4,11 +4,8 @@ describe Meshchat::Encryption::NaCl do
   let(:klass) { Meshchat::Encryption::NaCl }
 
   before(:each) do
-    @alice_private_key = RbNaCl::PrivateKey.generate
-    @alice_public_key = @alice_private_key.public_key
-
-    @bob_private_key = RbNaCl::PrivateKey.generate
-    @bob_public_key = @bob_private_key.public_key
+    @alice_public_key, @alice_private_key = klass.generate_keys
+    @bob_public_key, @bob_private_key = klass.generate_keys
   end
 
   it 'has a message that can be decrypted' do

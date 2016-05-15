@@ -16,8 +16,10 @@ module Meshchat
         end
 
         # @param [String] encoded_message - the encrypted message as a string
-        def process(encoded_message)
-          request = MessageDecryptor.new(encoded_message, _message_factory)
+        # @param [String] uid - the uid of the sender
+        def process(encoded_message, uid)
+          public_key = Node.public_key_from_uid(uid)
+          request = MessageDecryptor.new(encoded_message, _message_factory, public_key)
           message = request.message
 
           Debug.receiving_message(message)

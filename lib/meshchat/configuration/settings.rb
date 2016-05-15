@@ -60,17 +60,10 @@ module Meshchat
       end
 
       def generate_keys
-        @key_pair = OpenSSL::PKey::RSA.new(2048)
-        self['publickey'] = @key_pair.public_key.to_pem
-        self['privatekey'] = @key_pair.to_pem
+        pubilc_key, private_key = Encryption.generate_keys
+        self['publickey'] = pubilc_key
+        self['privatekey'] = private_key
         Display.success 'new keys generated'
-      end
-
-      def key_pair
-        if !@key_pair && keys_exist?
-          @key_pair = OpenSSL::PKey::RSA.new(self['privatekey'] + self['publickey'])
-        end
-        @key_pair
       end
 
       def identity
