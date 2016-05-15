@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in authorizable.gemspec
-# gem 'ncursesw', github: 'sup-heliotrope/ncursesw-ruby'
+# Specify your gem's dependencies in meshchat.gemspec
 gemspec
-
-# gem 'em-websocket-client', github: 'mwylde/em-websocket-client'
