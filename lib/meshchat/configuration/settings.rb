@@ -25,8 +25,13 @@ module Meshchat
           'alias' => self['alias'],
           'location' => location,
           'uid' => self['uid'],
-          'publickey' => public_key
+          'publickey' => self['publickey']
         }
+      end
+
+      def save
+        self._hash = DEFAULT_SETTINGS.merge(_hash)
+        super
       end
 
       def share
@@ -46,11 +51,13 @@ module Meshchat
       end
 
       def public_key
-        self['publickey']
+        return unless (key = self['publickey']).present?
+        @public_key ||= Encryption.public_key_from_base64(key)
       end
 
       def private_key
-        self['privatkey']
+        return unless (key = self['privatekey']).present?
+        @private_key ||= Encryption.private_key_from_base64(key)
       end
 
       # generates 32 bytes
@@ -61,8 +68,8 @@ module Meshchat
 
       def generate_keys
         pubilc_key, private_key = Encryption.generate_keys
-        self['publickey'] = pubilc_key
-        self['privatekey'] = private_key
+        self['publickey'] = to_base64(pubilc_key)
+        self['privatekey'] = to_base64(private_key)
         Display.success 'new keys generated'
       end
 
@@ -87,14 +94,24 @@ module Meshchat
       def errors
         messages = []
         messages << 'must have an alias' unless self['alias'].present?
-        messages << 'must have ip set' unless self['ip'].present?
-        messages << 'must have port set' unless self['port'].present?
+        # messages << 'must have ip set' unless self['ip'].present?
+        # messages << 'must have port set' unless self['port'].present?
         messages << 'must have uid set' unless self['uid'].present?
         messages
       end
 
       def is_complete?
         valid? && self['privatekey'] && self['publickey']
+      end
+
+      # for NaCl, this is simple because the public and private key's to_s
+      # method defines to_s as the byte string.
+      #
+      # for AES_RSA, the keys are already strings.
+      #
+      # So really, all that needs to be done is encode
+      def to_base64(key)
+        Base64.encode64(key.to_s)
       end
     end
   end

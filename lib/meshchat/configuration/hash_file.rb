@@ -23,11 +23,9 @@ module Meshchat
         f = read_file
         begin
           self._hash = JSON.parse(f)
-        rescue => e
-          Display.alert e.message
-          self._hash = default_settings
-          Display.warning 'writing defaults...'
-          save
+        rescue
+          # Don't do anything, because we need to regenerate the settings.
+          self._hash = {}
         end
       end
 
@@ -49,6 +47,7 @@ module Meshchat
         File.rename(filename, filename + '.bak') if exists
         # write
         File.open(filename, 'w') { |f| f.syswrite(_hash.to_json) }
+      ensure
         # remove backup
         File.delete(filename + '.bak') if exists
       end

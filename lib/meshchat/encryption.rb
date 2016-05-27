@@ -12,7 +12,7 @@ module Meshchat
 
     module_function
 
-    DEFAULT_ENCRYPTOR = AES_RSA
+    DEFAULT_ENCRYPTOR = NaCl
 
     def encryptor=(klass)
       @current_encryptor = klass
@@ -22,12 +22,26 @@ module Meshchat
       @current_encryptor || DEFAULT_ENCRYPTOR
     end
 
+    def generate_keys
+      current_encryptor.generate_keys
+    end
+
     def decrypt(*args)
       current_encryptor.decrypt(*args)
     end
 
     def encrypt(*args)
       current_encryptor.encrypt(*args)
+    end
+
+    def public_key_from_base64(base64)
+      decoded = Base64.decode64(base64)
+      current_encryptor.public_key_from_bytes(decoded)
+    end
+
+    def private_key_from_base64(base64)
+      decoded = Base64.decode64(base64)
+      current_encryptor.private_key_from_bytes(decoded)
     end
   end
 end

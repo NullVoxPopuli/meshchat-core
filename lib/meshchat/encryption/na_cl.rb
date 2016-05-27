@@ -19,20 +19,23 @@ module Meshchat
       require 'rbnacl/libsodium'
       require 'rbnacl'
 
+      PUBLIC_KEY_CLASS = RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PublicKey
+      PRIVATE_KEY_CLASS = RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PrivateKey
+
       module_function
 
       # @param [String] msg - payload to be encrypted
-      # @param [String] for_public_key - the public key of the intended recipient
-      # @param [String] with_private_key - (usually) our private key
+      # @param [String|PublicKey] for_public_key - the public key of the intended recipient
+      # @param [String|PrivateKey] with_private_key - (usually) our private key
       def encrypt(msg, for_public_key, with_private_key = nil)
         # encrypt using the box. The nonce is handled for us
         box = RbNaCl::SimpleBox.from_keypair(for_public_key, with_private_key)
-        encrypted = box.encrypt(msg)
+        box.encrypt(msg)
       end
 
       # @param [String] msg - payload to be encrypted
-      # @param [String] from_public_key - the public key of the intended recipient
-      # @param [String] with_private_key - (usually) our private key
+      # @param [String|PublicKey] from_public_key - the public key of the intended recipient
+      # @param [String|PrivateKey] with_private_key - (usually) our private key
       def decrypt(msg, from_public_key, with_private_key = nil)
         # decrypt using the box. The nonce is handled for us
         box = RbNaCl::SimpleBox.from_keypair(from_public_key, with_private_key)
@@ -40,11 +43,31 @@ module Meshchat
       end
 
       # Generates Random Keys
+      #
+      # Pretty much only used when creating your identity
       def generate_keys
         private_key = RbNaCl::PrivateKey.generate
         public_key = private_key.public_key
 
         [public_key, private_key]
+      end
+
+      #############################
+      # -- Conversion utilities --
+      #
+      # these are used for reading from and saving to settings files.
+      #############################
+
+      # pretty much just an alias for this rediculously long namespace
+      # @return [RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PrivateKey] from key
+      def private_key_from_bytes(byte_string)
+        PRIVATE_KEY_CLASS.new(byte_string)
+      end
+
+      # pretty much just an alias for this rediculously long namespace
+      # @return [RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PublicKey] from key
+      def public_key_from_bytes(byte_string)
+        PUBLIC_KEY_CLASS.new(byte_string)
       end
     end
   end

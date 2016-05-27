@@ -70,6 +70,20 @@ module Meshchat
 
         [public_key, private_key]
       end
+
+      #############################
+      # -- Conversion utilities --
+      #
+      # these are used for reading from and saving to settings files.
+      #############################
+
+      # pretty much just an alias for this rediculously long namespace
+      # @return [string] from key
+      def private_key_from_bytes(string); string; end
+
+      # pretty much just an alias for this rediculously long namespace
+      # @return [string] from key
+      def public_key_from_bytes(string); string; end
     end
   end
 end
