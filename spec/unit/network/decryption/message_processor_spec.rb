@@ -21,8 +21,9 @@ describe Meshchat::Network::Incoming::MessageProcessor do
         alias_name: 'me',
         location_on_network: 'localhost:2008',
         uid: '1233123',
-        public_key: @public_key
+        public_key: Base64.strict_encode64(@public_key)
       )
+      @node_me.save(validate: false)
 
       @public_key1, @private_key1 = Meshchat::Encryption.current_encryptor.generate_keys
 
@@ -30,7 +31,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
     context 'throws exceptions' do
       context 'not authorized' do
         it 'cannot be decrypted' do
-          Meshchat::APP_CONFIG.user[:privatekey] = @private_key1
+          Meshchat::APP_CONFIG.user['privatekey'] = @private_key1
           message = Meshchat::Network::Message::Ping.new
           raw = message.encrypt_for(@node_me)
 
@@ -42,7 +43,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
 
       context 'forbidden' do
         it 'receives a message from a non-existant node' do
-          Meshchat::APP_CONFIG.user[:privatekey] = @private_key
+          Meshchat::APP_CONFIG.user['privatekey'] = @private_key
           message = Meshchat::Network::Message::Ping.new
           raw = message.encrypt_for(@node_me)
 
@@ -54,7 +55,7 @@ describe Meshchat::Network::Incoming::MessageProcessor do
 
       context 'bad request' do
         it 'uses an unsupported type' do
-          Meshchat::APP_CONFIG.user[:privatekey] = @private_key
+          Meshchat::APP_CONFIG.user['privatekey'] = @private_key
           message = Meshchat::Network::Message::Ping.new
           message.instance_variable_set('@type', 'unsupported')
           raw = message.encrypt_for(@node_me)

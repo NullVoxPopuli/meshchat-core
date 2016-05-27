@@ -24,8 +24,7 @@ module Meshchat
         begin
           self._hash = JSON.parse(f)
         rescue
-          # Don't do anything, because we need to regenerate the settings.
-          self._hash = {}
+          self._hash = default_settings
         end
       end
 

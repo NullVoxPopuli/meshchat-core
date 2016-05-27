@@ -48,15 +48,15 @@ describe Meshchat::Configuration::Settings do
         expect(i.errors).to include('must have an alias')
       end
 
-      it 'must have ip set' do
-        i['ip'] = nil
-        expect(i.errors).to include('must have ip set')
-      end
+      # it 'must have ip set' do
+      #   i['ip'] = nil
+      #   expect(i.errors).to include('must have ip set')
+      # end
 
-      it error = 'must have port set' do
-        i['port'] = nil
-        expect(i.errors).to include('must have port set')
-      end
+      # it error = 'must have port set' do
+      #   i['port'] = nil
+      #   expect(i.errors).to include('must have port set')
+      # end
 
       it error = 'must have uid set' do
         i['uid'] = nil

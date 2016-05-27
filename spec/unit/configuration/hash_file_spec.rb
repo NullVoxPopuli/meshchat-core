@@ -46,12 +46,6 @@ describe Meshchat::Configuration::HashFile do
             allow(instance).to receive(:read_file) { '{' }
           end
 
-          it 'shows the error message' do
-            expect(Meshchat::Display).to receive(:alert)
-            expect(Meshchat::Display).to receive(:warning)
-            instance.load
-          end
-
           it 'writes defaults' do
             instance.load
 
