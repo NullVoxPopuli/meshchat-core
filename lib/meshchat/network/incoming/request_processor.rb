@@ -23,7 +23,14 @@ module Meshchat
 
         def parse_content(content)
           content = JSON.parse(content) if content.is_a?(String)
+          verify(content)
+
           [content['message'], content['uid']]
+        end
+
+        def verify(content)
+          Display.info('message missing') unless content['message']
+          Display.info('uid missing') unless content['uid']
         end
       end
     end

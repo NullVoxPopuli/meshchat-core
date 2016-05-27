@@ -129,9 +129,12 @@ module Meshchat
         alias_method :jsonized_payload, :render
 
         def encrypt_for(node)
-          result     = jsonized_payload
-          public_key = node.public_key
-          result     = Encryption.encrypt(result, public_key) if node.public_key
+          result      = jsonized_payload
+          public_key  = node.public_key
+          public_key  = Encryption.public_key_from_base64(public_key)
+          private_key = APP_CONFIG.user.private_key
+          result      = Encryption.encrypt(result, public_key, private_key) if node.public_key
+
           Base64.strict_encode64(result)
         end
       end

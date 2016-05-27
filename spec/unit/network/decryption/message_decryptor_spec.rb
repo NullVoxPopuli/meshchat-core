@@ -24,6 +24,7 @@ describe Meshchat::Network::Incoming::MessageDecryptor do
           "uid":"1"
         }
       }'
+      # strict_encode64 ?
       json = Base64.encode64(json)
       factory = message_dispatcher._message_factory
       s = klass.new(json, factory, nil)

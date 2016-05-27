@@ -111,7 +111,7 @@ module Meshchat
       #
       # So really, all that needs to be done is encode
       def to_base64(key)
-        Base64.encode64(key.to_s)
+        Base64.strict_encode64(key.to_s)
       end
     end
   end
